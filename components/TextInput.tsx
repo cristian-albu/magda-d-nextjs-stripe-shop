@@ -1,12 +1,12 @@
 import React from "react";
 
-const styles = {
+export const styles = {
   inputContainer: `relative`,
   inputLabel: "flex flex-col w-full ",
   inputText:
-    "border-2  outline-none rounded-md w-full p-1 outline-none transition hover:border-yellow focus:border-pink mb-3 bg-gradient-to-tr from-gray-100 to-white",
+    "border-2 border-black outline-none rounded-md w-full p-1 outline-none transition hover:border-yellow focus:border-pink mb-3 bg-gradient-to-tr from-gray-100 to-white",
   inputTextarea:
-    "max-w-full min-w-full w-full min-h-[150px] max-w-[350px] h-full",
+    "max-w-full min-w-full w-full min-h-[4rem] max-h-[4rem] max-w-full ",
   inputLabelP: "text-lg mb-2",
 
   errorBox:

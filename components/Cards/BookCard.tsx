@@ -24,7 +24,6 @@ const BookCard = ({ product }: SingleProductObj) => {
         setClickAddToCart(itemExists ? true : false);
       }
     }
-    console.log("render");
   }, [cart]);
 
   const onAddToCart = useCallback(

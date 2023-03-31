@@ -68,10 +68,10 @@
   }
 
   .btnPrimary {
-    @apply bg-white  relative p-2 text-purple rounded-md flex gap-1 items-center  text-lg transition hover:bg-purple hover:text-white hover:scale-[1.05] shadow-yellow/20 shadow-lg enabled:cursor-pointer;
+    @apply bg-white  relative p-2 text-purple rounded-md flex gap-1 items-center  text-lg transition hover:bg-purple hover:text-white hover:scale-[1.05] shadow-yellow/20 shadow-lg enabled:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed;
   }
 
   .btnPrimary2 {
-    @apply bg-purple relative  p-2 text-white rounded-md flex gap-1 items-center  text-lg transition hover:bg-yellow hover:scale-[1.05] shadow-yellow/20 shadow-lg enabled:cursor-pointer;
+    @apply bg-purple relative  p-2 text-white rounded-md flex gap-1 items-center  text-lg transition hover:bg-yellow hover:scale-[1.05] shadow-yellow/20 shadow-lg enabled:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed;
   }
 }

@@ -21,7 +21,12 @@ const ContactPage = () => {
 
   const nameInvalidCheck: FormValidationFunc = () => {
     if (nameState.value.length < 1) {
-      return { message: "Acest câmp nu poate fi gol", err: true };
+      return {
+        message: langEn
+          ? "This field cannot be empty"
+          : "Acest câmp nu poate fi gol",
+        err: true,
+      };
     } else {
       return { message: "", err: false };
     }
@@ -36,11 +41,21 @@ const ContactPage = () => {
 
   const emailInvalidCheck: FormValidationFunc = () => {
     if (emailState.value.length < 2) {
-      return { message: "Acest câmp nu poate fi gol", err: true };
+      return {
+        message: langEn
+          ? "This field cannot be empty"
+          : "Acest câmp nu poate fi gol",
+        err: true,
+      };
     } else if (
       !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailState.value)
     ) {
-      return { message: "Trebuie să introduceți un e-mail valid", err: true };
+      return {
+        message: langEn
+          ? "You must enter a valid email address"
+          : "Trebuie să introduceți un e-mail valid",
+        err: true,
+      };
     } else {
       return { message: "", err: false };
     }
@@ -57,11 +72,18 @@ const ContactPage = () => {
   const messageInvalidCheck: FormValidationFunc = () => {
     if (messageState.value.length < 10) {
       return {
-        message: "Mesajul ar trebui să fie puțin mai lung",
+        message: langEn
+          ? "Your message is too short"
+          : "Mesajul ar trebui să fie puțin mai lung",
         err: true,
       };
     } else if (messageState.value.length > 500) {
-      return { message: "Mesajul tău este prea lung", err: true };
+      return {
+        message: langEn
+          ? "Your message is too long"
+          : "Mesajul tău este prea lung",
+        err: true,
+      };
     } else {
       return { message: "", err: false };
     }
@@ -71,8 +93,13 @@ const ContactPage = () => {
 
   const [checkboxState, setCheckboxState] = useState(false);
 
-  const { setCookiePref, setCookieAnalytics, openPrivacy, handleSave }: any =
-    useContext(PrivacyContext);
+  const {
+    setCookiePref,
+    setCookieAnalytics,
+    openPrivacy,
+    langEn,
+    handleSave,
+  }: any = useContext(PrivacyContext);
 
   // ? Handle form error state
 
@@ -122,7 +149,7 @@ const ContactPage = () => {
         image="https://magdadimitrescu.com/assets/magda_dimitrescu_01.jpg"
       />
       <div className="relative min-h-[90vh] w-full bg-gray-100 secondaryGradient">
-        <div className="mainGradient w-full md:w-[66vw]" />
+        <div className="mainGradient w-full md:w-[66%]" />
 
         <Section>
           <Wrapper>

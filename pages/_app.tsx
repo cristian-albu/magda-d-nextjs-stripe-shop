@@ -26,7 +26,7 @@ const stripePromise = loadStripe(
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
+  console.log(router.asPath.includes("checkout"));
   return (
     <>
       <Head>
@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div
         className={`${SourceSans.className} ${SourceSans.variable}`}
         style={{
-          maxWidth: "100vw",
+          maxWidth: "100%",
           overflow: "hidden",
           paddingTop: "3rem",
           position: "relative",
@@ -48,8 +48,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <PrivacyContext>
           <CartProvider>
             <Elements stripe={stripePromise}>
-              <Nav route={router.asPath.split("/")} />
-              <Cart />
+              {!router.asPath.includes("checkout") && (
+                <>
+                  <Nav route={router.asPath.split("/")} />
+                  <Cart />
+                </>
+              )}
+
               <AnimatePresence mode="wait">
                 <motion.div
                   key={router.route}
@@ -74,8 +79,8 @@ export default function App({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </motion.div>
               </AnimatePresence>
-              <Footer />
               <Gdpr />
+              <Footer />
             </Elements>
           </CartProvider>
         </PrivacyContext>

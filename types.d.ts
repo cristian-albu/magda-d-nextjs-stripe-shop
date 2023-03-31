@@ -77,3 +77,10 @@ type ContactMailPayload = {
   email: string;
   message: string;
 };
+
+interface Shipping {
+  name: string;
+  address: {
+    line1: string;
+  };
+}

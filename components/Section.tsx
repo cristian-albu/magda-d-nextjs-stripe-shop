@@ -8,13 +8,13 @@ const Section = ({
   bg?: string;
 }) => {
   return (
-    <section
-      className={` p-[2rem] md:p-[5rem] xl:p-[8rem] 2xl:p-[12rem] flex flex-col items-center justify-center border-[1px] border-grey-100 ${
+    <div
+      className={` p-[2rem] md:p-[5rem] xl:p-[8rem] 2xl:p-[12rem] flex flex-col items-center justify-center  ${
         bg === "grey" ? "bg-grey" : "bg-transparent"
       }`}
     >
       {children}
-    </section>
+    </div>
   );
 };
 

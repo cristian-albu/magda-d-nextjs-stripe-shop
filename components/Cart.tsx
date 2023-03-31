@@ -1,5 +1,6 @@
 import CartContext from "@/contexts/CartProvider";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useContext, useCallback } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -52,7 +53,7 @@ const Cart = () => {
           Coşul tău:
         </p>
         {cart.length > 0 ? (
-          <div className="w-full relative overflow-y-auto overflow-x-visible pb-2 pl-10">
+          <div className="w-full relative overflow-y-auto overflow-x-visible pb-2 pl-10 flex flex-col justify-start items-start">
             {cart.map((item: Product) => (
               <div
                 key={item.id}
@@ -96,7 +97,15 @@ const Cart = () => {
             ))}
 
             <p className="text-xl md:text-3xl my-10">Total: {totalPrice}</p>
-            <button className="btnPrimary2 z-[90]">Mergi la casă</button>
+            {cart.length > 0 && (
+              <Link
+                className="btnPrimary2 z-[90]"
+                href={"/checkout"}
+                onClick={() => setOpenCart(false)}
+              >
+                Mergi la casă
+              </Link>
+            )}
           </div>
         ) : (
           <div className="pl-10">Nu ai nimic în coş</div>
