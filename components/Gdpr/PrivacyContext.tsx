@@ -24,6 +24,7 @@ export default ({ children }: ChildrenType): ReactElement => {
   const [cookiePref, setCookiePref] = useState(false);
   const [cookieAnalytics, setCookieAnalytics] = useState(false);
   const [cookieAds, setCookieAds] = useState(false);
+  const [langEn, setLangEn] = useState(false);
 
   const handleClose = () => {
     setShowBanner(false);
@@ -64,12 +65,27 @@ export default ({ children }: ChildrenType): ReactElement => {
     handleClose();
   };
 
+  const handleLang = () => {
+    if (langEn) {
+      setLangEn(false);
+      setCookie("mdAuroraLoveLangChoice", "ro", { maxAge: 120960000 });
+    } else {
+      setLangEn(true);
+      setCookie("mdAuroraLoveLangChoice", "en", { maxAge: 120960000 });
+    }
+  };
+
   const handleSave = () => {
     let val: Array<string> = [];
 
     if (cookiePref) val.push("pref");
     if (cookieAnalytics) val.push("analytics");
     if (cookieAds) val.push("ads");
+    if (langEn) {
+      setCookie("mdAuroraLoveLangChoice", "en", { maxAge: 120960000 });
+    } else {
+      setCookie("mdAuroraLoveLangChoice", "ro", { maxAge: 120960000 });
+    }
     const data = val.length
       ? val.length > 2
         ? "acceptAll"
@@ -91,13 +107,17 @@ export default ({ children }: ChildrenType): ReactElement => {
 
   useEffect(() => {
     let val = [""];
+    let lang = [""];
     const cookieData = getCookie("mdAuroraLoveConsentChoice");
+    const langData = getCookie("mdAuroraLoveLangChoice");
 
     if (typeof cookieData == "string") val = cookieData.split(".");
+    if (typeof langData == "string") lang = langData.split(".");
 
     if (val.includes("pref")) setCookiePref(true);
     if (val.includes("analytics")) setCookieAnalytics(true);
     if (val.includes("ads")) setCookieAds(true);
+    if (lang.includes("en")) setLangEn(true);
     if (val.includes("acceptAll")) {
       setCookiePref(true);
       setCookieAnalytics(true);
@@ -113,6 +133,9 @@ export default ({ children }: ChildrenType): ReactElement => {
     cookiePref,
     cookieAnalytics,
     cookieAds,
+    langEn,
+    setLangEn,
+    handleLang,
     handleRefuseAll,
     handleAcceptAll,
     setCookiePref,

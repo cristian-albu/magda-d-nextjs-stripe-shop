@@ -8,7 +8,6 @@ import React from "react";
 const Index: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ item_ebook, item_hardcover }) => {
-  console.log(item_ebook, item_hardcover);
   return (
     <>
       <DynamicHead

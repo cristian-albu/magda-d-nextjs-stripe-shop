@@ -19,6 +19,8 @@ export const staticData = {
     analyticsDesc: `Pentru a măsura traficul şi performanţa website-ului`,
     adsTitle: `Publicitate`,
     adsDesc: `Pentru a putea personaliza anunţurile publicitare. (În acest moment nu folosim anunţuri)`,
+    langTitle: `Limba engleză`,
+    langDesc: `Pentru a putea personaliza limba`,
     save: "Salvează",
   },
   privacy: {

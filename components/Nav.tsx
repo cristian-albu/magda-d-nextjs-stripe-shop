@@ -9,6 +9,8 @@ import {
 } from "react-icons/ai";
 import { BiMessageDetail, BiBookOpen } from "react-icons/bi";
 import CartContext from "@/contexts/CartProvider";
+import { PrivacyContext } from "@/components/Gdpr/PrivacyContext";
+import Image from "next/image";
 
 const styles = {
   mainLi: `transition-all duration-150 ease hover:bg-yellow  flex items-center justify-center h-[3rem] md:h-auto`,
@@ -19,22 +21,23 @@ function Header({ route }: Router) {
   const { totalItems, totalPrice, setOpenCart, openCart } =
     useContext(CartContext);
 
+  const { setLangEn, langEn, handleLang }: any = useContext(PrivacyContext);
   const [mobMenu, setMobMenu] = useState(false);
 
   const fullRoute = route.join("/");
   const headerData: Nav = [
     {
-      title: "Acasă",
+      title: langEn ? "Home" : "Acasă",
       link: "/",
       icon: <AiOutlineHome />,
     },
     {
-      title: "Magazin",
+      title: langEn ? "Shop" : "Magazin",
       link: "/magazin",
       icon: <AiOutlineShopping />,
     },
     {
-      title: "Despre mine",
+      title: langEn ? "About me" : "Despre mine",
       link: "/despre-mine",
       icon: <AiOutlineUser />,
     },
@@ -44,12 +47,12 @@ function Header({ route }: Router) {
     //   icon: <BiBookOpen />,
     // },
     {
-      title: "Contact",
+      title: langEn ? "Contact" : "Contact",
       link: "/contact",
       icon: <BiMessageDetail />,
     },
     {
-      title: "Coş",
+      title: langEn ? "Cart" : "Coş",
       link: "/cos",
       icon: <FiShoppingCart />,
     },
@@ -143,6 +146,16 @@ function Header({ route }: Router) {
             onClick={() => setMobMenu((mobMenu) => !mobMenu)}
           >
             <RxHamburgerMenu />
+          </button>
+        </li>
+        <li>
+          <button className={styles.link} onClick={() => handleLang()}>
+            <Image
+              src={langEn ? "/assets/ro.svg" : "/assets/en.svg"}
+              width={15}
+              height={15}
+              alt=""
+            />
           </button>
         </li>
       </ul>

@@ -16,6 +16,9 @@ const Preferences = () => {
     setCookieAnalytics,
     setCookieAds,
     openPrivacy,
+    langEn,
+    setLangEn,
+    handleLang,
     handleSave,
   }: any = useContext(PrivacyContext);
   return (
@@ -69,6 +72,14 @@ const Preferences = () => {
         />
 
         <p className="mb-5">{staticData.preferences.adsDesc}</p>
+
+        <Checkbox
+          text={staticData.preferences.langTitle}
+          checked={langEn}
+          onChange={() => handleLang()}
+        />
+
+        <p className="mb-5">{staticData.preferences.langDesc}</p>
       </div>
 
       <div className={`flex flex-wrap justify-between items-center w-full`}>
