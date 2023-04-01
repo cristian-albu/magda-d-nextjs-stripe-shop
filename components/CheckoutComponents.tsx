@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { PrivacyContext } from "@/components/Gdpr/PrivacyContext";
-import TextInput from "./TextInput";
+import TextInput, { styles } from "./TextInput";
 
 export const CheckoutShippingInput = () => {
   const { langEn }: any = useContext(PrivacyContext);
@@ -31,7 +31,6 @@ export const CheckoutShippingInput = () => {
       state={shippingStateAdrs}
       setState={setShippingStateAdrs}
       validationCheck={shippingValidationCheckAdrs}
-      type="textarea"
     />
   );
 };
@@ -107,6 +106,69 @@ export const CheckoutNameInput = () => {
       state={shippingStateName}
       setState={setShippingStateName}
       validationCheck={shippingValidationCheckName}
+    />
+  );
+};
+
+export const CheckoutCityInput = () => {
+  const { langEn }: any = useContext(PrivacyContext);
+  const [state, setState] = useState<FormState>({
+    value: "",
+    errorState: "",
+    firstFocus: true,
+  });
+
+  const validationCheck: FormValidationFunc = () => {
+    if (state.value.length < 2) {
+      return {
+        message: langEn
+          ? "This field cannot be empty"
+          : "Acest câmp nu poate fi gol",
+        err: true,
+      };
+    } else {
+      return { message: "", err: false };
+    }
+  };
+
+  //   MUST NOT MODIFY NAMES. I WAS LAZY WITH TIHS
+  return (
+    <TextInput
+      name={langEn ? "City" : "Oraş"}
+      state={state}
+      setState={setState}
+      validationCheck={validationCheck}
+    />
+  );
+};
+
+export const CheckoutPostalCode = () => {
+  const { langEn }: any = useContext(PrivacyContext);
+  const [state, setState] = useState<FormState>({
+    value: "",
+    errorState: "",
+    firstFocus: true,
+  });
+
+  const validationCheck: FormValidationFunc = () => {
+    if (state.value.length != 6) {
+      return {
+        message: langEn ? "Enter a valid zip code" : "Introduceţi un cod valid",
+        err: true,
+      };
+    } else {
+      return { message: "", err: false };
+    }
+  };
+
+  //   MUST NOT MODIFY NAMES. I WAS LAZY WITH TIHS
+  return (
+    <TextInput
+      name={langEn ? "Zip Code" : "Cod Poştal"}
+      state={state}
+      setState={setState}
+      validationCheck={validationCheck}
+      type="number"
     />
   );
 };

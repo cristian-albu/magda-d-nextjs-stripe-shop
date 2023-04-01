@@ -7,10 +7,10 @@ export const styles = {
     "border-2 border-black outline-none rounded-md w-full p-1 outline-none transition hover:border-yellow focus:border-pink mb-3 bg-gradient-to-tr from-gray-100 to-white",
   inputTextarea:
     "max-w-full min-w-full w-full min-h-[4rem] max-h-[4rem] max-w-full ",
-  inputLabelP: "text-lg mb-2",
+  inputLabelP: " mb-2 text-sm",
 
   errorBox:
-    "absolute bottom-[100%] mb-[-2rem] right-0 bg-black text-white rounded-full p-2 transition",
+    "absolute bottom-[100%] mb-[-2rem] right-0 bg-black text-white rounded-full p-2 text-xs transition",
 };
 
 const TextInput = ({
@@ -31,6 +31,23 @@ const TextInput = ({
           id={name}
           name={name}
           className={`${styles.inputText} ${styles.inputTextarea} ${
+            state.errorState == "hide" && validationCheck().err
+              ? "border-red-400 "
+              : "border-black"
+          } `}
+          value={state.value}
+          onBlur={() =>
+            setState({ ...state, errorState: "hide", firstFocus: false })
+          }
+          onFocus={() => setState({ ...state, errorState: "show" })}
+          onChange={(e) => setState({ ...state, value: e.target.value })}
+        />
+      ) : type === "number" ? (
+        <input
+          type="number"
+          id={name}
+          name={name}
+          className={`${styles.inputText} ${
             state.errorState == "hide" && validationCheck().err
               ? "border-red-400 "
               : "border-black"

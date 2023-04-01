@@ -55,6 +55,17 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       payment_method_types: ["card"],
       receipt_email,
       shipping,
+      metadata: {
+        data: JSON.stringify(
+          cartItems.map((item: Product) => ({
+            id: item.id,
+            title: item.title,
+            price: item.price,
+            quantity: item.quantity,
+            digital: item.digital,
+          }))
+        ),
+      },
     });
 
     res.status(200).json({ clientSecret: paymentIntent.client_secret });

@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { Checkbox } from "../Checkbox";
 import { AiOutlineCheckCircle, AiOutlineSave } from "react-icons/ai";
 import { RxCrossCircled } from "react-icons/rx";
+import { useRouter } from "next/router";
 
 const Preferences = () => {
   const {
@@ -21,6 +22,8 @@ const Preferences = () => {
     handleLang,
     handleSave,
   }: any = useContext(PrivacyContext);
+
+  const router = useRouter();
   return (
     <div
       className={`bg-[#fff] p-8 rounded-md drop-shadow-xl w-[100%] flex flex-col overflow-auto h-full max-h-[80vh] items-start justify-between max-w-[1200px]`}
@@ -53,6 +56,7 @@ const Preferences = () => {
           text={staticData.preferences.prefsTitle}
           checked={cookiePref}
           onChange={() => setCookiePref(!cookiePref)}
+          disabled={router.asPath.includes("checkout")}
         />
 
         <p className="mb-5">{staticData.preferences.prefDesc}</p>
@@ -61,6 +65,7 @@ const Preferences = () => {
           text={staticData.preferences.analyticsTitle}
           checked={cookieAnalytics}
           onChange={() => setCookieAnalytics(!cookieAnalytics)}
+          disabled={router.asPath.includes("checkout")}
         />
 
         <p className="mb-5">{staticData.preferences.analyticsDesc}</p>

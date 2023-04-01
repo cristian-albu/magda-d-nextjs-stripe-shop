@@ -9,7 +9,7 @@ const Section = ({
 }) => {
   return (
     <div
-      className={` p-[2rem] md:p-[5rem] xl:p-[8rem] 2xl:p-[12rem] flex flex-col items-center justify-center  ${
+      className={` p-[2rem] md:p-[5rem] xl:p-[6rem] 2xl:p-[10rem] flex flex-col items-center justify-center  ${
         bg === "grey" ? "bg-grey" : "bg-transparent"
       }`}
     >
