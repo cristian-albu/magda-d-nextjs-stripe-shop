@@ -14,6 +14,7 @@ type ProductList = Array<Product>;
 
 type SingleProductObj = {
   [key: string]: Product;
+  langEn?: boolean;
 };
 
 type ProductObject = {

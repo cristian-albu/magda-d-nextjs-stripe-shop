@@ -42,6 +42,8 @@ const Checkout = () => {
     handleSave,
   }: any = useContext(PrivacyContext);
 
+  const [checkoutFade, setCheckoutFade] = useState(false);
+
   const [checkoutState, setCheckoutState] = useState({
     address: ``,
     email: ``,
@@ -182,8 +184,10 @@ const Checkout = () => {
       if (payload.error) {
         setError({ ...error, err: `Payment failed` });
       } else {
-        router.push("/succes");
+        setCheckoutFade(true);
         RemoveFromCart();
+
+        router.push("/succes");
       }
     }
   };
@@ -235,7 +239,9 @@ const Checkout = () => {
             <div className="w-full md:w-1/2">
               {cart.length > 0 ? (
                 <form
-                  className=" p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem]"
+                  className={`p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem] opacity-[1]  ${
+                    checkoutFade ? `opacity-0` : ``
+                  }`}
                   onChange={({ target }) => handleFormData(target)}
                   onSubmit={(e) => e.preventDefault()}
                 >
@@ -326,7 +332,11 @@ const Checkout = () => {
                   </div>
                 </form>
               ) : (
-                <div className=" p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem]">
+                <div
+                  className={`p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem] opacity-[1]  ${
+                    checkoutFade ? `opacity-0` : ``
+                  }`}
+                >
                   <div className="w-full h-full flex flex-col p-[1rem] md:p-[2rem] bg-white rounded-md  justify-center items-center">
                     <p className="text-3xl">😕</p>
 

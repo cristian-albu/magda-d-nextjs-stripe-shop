@@ -1,3 +1,10 @@
+import {
+  AiFillYoutube,
+  AiFillFacebook,
+  AiFillInstagram,
+  AiFillLinkedin,
+} from "react-icons/ai";
+
 interface HomePageData {
   valueProp: string;
   valueDesc: string;
@@ -13,6 +20,72 @@ export const homePageData: HomePageData = {
   celor care au venit acum pe Pamant sa se Inalte, celor care vor sa revina la starea naturala de a fi, si anume, de a iubi. 
   Asa sa ne ajute Dumnezeu! Multumesc Domnului!`,
   valueDesc: `Cartea aceasta s-a nascut intai ca titlu si o adunare de esee in 2014, apoi a fost continuata si scrisa in 2022 si finalizata in 2023`,
+  features: [
+    {
+      question: `Ce este această carte?`,
+      answer: `Un suport scris despre cum sa te înalți`,
+    },
+    { question: `Care a fost inspiraţia?`, answer: `Informații esoterice` },
+    {
+      question: `Ce subiecte sunt în carte?`,
+      answer: `Despre Dumnezeu, Dragoste, Lumea Interioară, Lumea Exterioară, Poezii, Afirmații, Rugăciuni, Meditații`,
+    },
+  ],
+  benefits: [
+    `Te va inspira să te cunoști pe tine`,
+    `Te va inspira să cunoști mai multe despre lumea înconjurătoare`,
+    `Te va ajuta sa îți clarifici unele răspunsuri `,
+  ],
+  testimonials: [
+    {
+      name: "D.B",
+      testimonial: `Sunt intr-o stare constanta de liniste de cand am fost la lansare si am inceput sa citesc fragmente din carte. 
+      Sunt uluita si ma simt ca apartin lumii pe care ai vazut-o. 
+      Am prins un deget de la picior din ea in momentul in care imi urmam cu sfintenie rugaciunea si imi exersam si afirmam energia creatoare - prin poezie
+      Nu stiu cum sa iti multumesc. M-am reconectat la mine atat de profund am ajuns ca sunt intr-o stare in care am gasit boala care ma cuprinsese, 
+      am vazut intunericul puternic si l-am invelit cu iubire. Trec acum printr-un shift enorm si ochii ti se datoreaza. Claritate si recunostinta pentru toate! 
+      Te iubesc si iti multumesc! Sa ne ajute Dumnezeu, suntem impreuna, sunt alaturi de tine si te voi sustine mereu cu toata puterea si luciditatea mea pe Cale. 
+      Te imbratisez si multumesc lui Dumnezeu ca existi, ca ne-a adus in acelasi timeline, e o binecuvantare pentru mine. 
+      Sper sa produca imboldul de a pune mana pe carte ca este aur spiritual, mir!`,
+    },
+    {
+      name: "I.A",
+      testimonial: `Bunaa💕 E super cartea!!! Încă nu  am terminat o , dar e geniala pana la momentul asta!!! Îmi oferă liniște și caldura!!❤️❤️❤️ transmite niște emoții foarte puternice. Eu mulțumesc, m ai făcut sa mi deschid noi orizonturi!!
+    `,
+    },
+    {
+      name: "A.H",
+      testimonial: ` Am primit ieri cartea și îți mulțumesc încă o dată pentru ea! nu am reusit sa citesc pana acum decât cateva pagini din ea, 
+    insa m-au surprins profunzimea ideilor  si viziunea integrată asupra vieții (ce cuprinde atât latura spirituală cât și laică). Te felicit încă o dată și aștept cu nerăbdare  următoarele apariții! 
+`,
+    },
+    {
+      name: "L.K",
+      testimonial: `Ieri nu am putut lasa cartea Magdei din maini.
+    Foarte faina claritate aduce prin explicarea tuturor termenilor si e o reformulare perfecta pentru toti cei care nu stiu cum sa puna in ordine lucrurile in viata lor.
+    Am ratacit o vreme dupa ce m-am dezlipit de biserica catolica si am inceput sa iau credinta sa o despring de religie si sa vad cum simt ca e bine pentru mine sa traiesc in afara comunitatii din biserica.
+    Imi place foarte mult cum gandeste si scrie Magda! Multumesc din tot sufletul pentru cadoul acesta minunat! Am multe idei despre cui i-ar prinde cartea asta.
+`,
+    },
+  ],
+  aboutTheAuthor: `Magda Dimitrescu, nascuta pe 2 Mai 1992 in Bucuresti, Romania, este de profesie actor, insa se ocupa cu diferite forme ale artelor. 
+  Este empat nativ. Prima data cand  a dovedit semne de capacitati extrasenzoriale a fost la varsta de 3 ani, urmand ca mai apoi sa continue aceasta calatorie. 
+  Este crestin ortodox, insa a avut contact din copilarie si cu alte practici spirituale, precum yoga, tai chi si meditatia transcedentala. 
+  La 12 ani citea Platon cautand informatii despre Atlantida, urma cursurile liceului Waldorf, unde a avut contact cu antroposofia si filosofia lui Rudolf Steiner. 
+  In liceu isi ocupa timpul liber cu studierea esoterismului, crestinismului ortodox, cat si a diferitelor religii prezente pe Terra in prezent. 
+  I-a placut dintodeauna socializarea, dorind sa cunoasca si sa inteleaga diferite tipuri de oameni si sa exploreze cai de comunicare cu acestia. 
+  Uneori sustine si consiliaza oameni prin Ghidare Inspirata, avand sesiuni de 1 la 1. Dupa o perioada lunga in care doar familia si prietenii apropiati 
+  stiau de natura ei intima pe calea spiritualitatii, a decis ca este timpul sa nu se mai ascunda si sa impartaseasca lumii ce a acumulat si ce a experimentat. 
+  `,
+};
+
+export const homePageDataEn: HomePageData = {
+  valueProp: `I dedicate this book to all who are looking
+to understand more about themselves, human nature as well as the nature of things, to
+all who are looking for God and they could use guidance, to all who came now on Earth
+to ascend, to all who want to get back to out natural state of being, and that is, to love. So help us God! Thank you, Lord!`,
+  valueDesc: `This book started with a title and a few pages written in 2014, continued in 2022 and
+finished in 2023.`,
   features: [
     {
       question: `Ce este această carte?`,
@@ -116,8 +189,8 @@ export const aboutPageData: AboutPageData = {
 
 interface ContactPageData {
   title: string;
-  socialMedia: Array<{ name: string; link: string }>;
-  emailTitle: ``;
+  socialMedia: Array<{ name: string; link: string; icon: React.ReactElement }>;
+  emailTitle: string;
   email: string;
   companyData: string;
 }
@@ -125,19 +198,73 @@ interface ContactPageData {
 export const contactPageData: ContactPageData = {
   title: `Contact`,
   socialMedia: [
-    { name: "Facebook", link: "https://www.facebook.com/magda.dimitrescu" },
-    { name: "Instagram", link: "https://instagram.com/magda.dimitrescu" },
+    {
+      name: "Facebook",
+      link: "https://www.facebook.com/magda.dimitrescu",
+      icon: <AiFillFacebook />,
+    },
+    {
+      name: "Instagram",
+      link: "https://instagram.com/magda.dimitrescu",
+      icon: <AiFillInstagram />,
+    },
     {
       name: "Instagram Maggie's Dreamland",
       link: "https://instagram.com/maggiesdreamland",
+      icon: <AiFillInstagram />,
     },
-    { name: "YouTube", link: "https://youtube.com/@magdadimitrescu2936" },
+    {
+      name: "YouTube",
+      link: "https://youtube.com/@magdadimitrescu2936",
+      icon: <AiFillYoutube />,
+    },
     {
       name: "LinkedIn",
       link: "https://www.linkedin.com/in/magda-dimitrescu-262ab416a/",
+      icon: <AiFillLinkedin />,
     },
   ],
-  emailTitle: ``,
+  emailTitle: `Email`,
   email: `magda.dimitrescu@gmail.com`,
   companyData: `Auroralove Srl, J22/514/2023, cod fiscal 47638588`,
+};
+
+export const footerData = {
+  stripe: {
+    title: "Plăţi online cu Stripe",
+    link: "https://stripe.com/en-ro",
+    logo: "/assets/stripe_logo.png",
+  },
+  anpc: {
+    title: "ANPC",
+    link: "https://anpc.ro/",
+  },
+  anpc1: {
+    title: "ANPC - Soluţionarea alternativă a litigiilor",
+    link: "https://anpc.ro/ce-este-sal/",
+  },
+  anpc2: {
+    title: "ANPC - Soluţionarea online a litigiilor ",
+    link: "https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=en",
+  },
+};
+
+export const footerDataEn = {
+  stripe: {
+    title: "Powered by Stripe",
+    link: "https://stripe.com/en-ro",
+    logo: "/assets/stripe_logo.png",
+  },
+  anpc: {
+    title: "ANPC",
+    link: "https://anpc.ro/",
+  },
+  anpc1: {
+    title: "ANPC - Alternative dispute resolution",
+    link: "https://anpc.ro/ce-este-sal/",
+  },
+  anpc2: {
+    title: "ANPC - Online dispute resolution",
+    link: "https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO",
+  },
 };

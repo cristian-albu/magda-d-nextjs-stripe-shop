@@ -125,27 +125,19 @@ function Header({ route }: Router) {
                 </li>
               )
           )}
-          <li>
-            <button
-              onClick={() => handleCart()}
-              className={`${styles.link} border-b-4  hover:bg-yellow transition`}
-            >
-              <div className="absolute top-[0.2rem] left-[2.2rem] text-xs   bg-black px-1 rounded-full text-white">
-                {totalItems}
-              </div>
-              <div className="text-xl">
-                {headerData[headerData.length - 1]?.icon}
-              </div>
-              {headerData[headerData.length - 1].title}
-            </button>
-          </li>
         </div>
-        <li className={`${styles.mainLi} md:hidden`}>
+        <li>
           <button
-            className={styles.link}
-            onClick={() => setMobMenu((mobMenu) => !mobMenu)}
+            onClick={() => handleCart()}
+            className={`${styles.link} border-b-4  hover:bg-yellow transition`}
           >
-            <RxHamburgerMenu />
+            <div className="absolute top-[0.2rem] left-[2.2rem] text-xs   bg-black px-1 rounded-full text-white">
+              {totalItems}
+            </div>
+            <div className="text-xl">
+              {headerData[headerData.length - 1]?.icon}
+            </div>
+            {headerData[headerData.length - 1].title}
           </button>
         </li>
         <li>
@@ -156,6 +148,14 @@ function Header({ route }: Router) {
               height={15}
               alt=""
             />
+          </button>
+        </li>
+        <li className={`${styles.mainLi} md:hidden`}>
+          <button
+            className={styles.link}
+            onClick={() => setMobMenu((mobMenu) => !mobMenu)}
+          >
+            <RxHamburgerMenu />
           </button>
         </li>
       </ul>
