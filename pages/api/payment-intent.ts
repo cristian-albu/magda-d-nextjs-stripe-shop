@@ -1,6 +1,8 @@
 import { instanceOfProduct, instanceOfShipping } from "@/lib/instancesCheckers";
+import pb from "@/lib/pocketBaseClient";
 import stripeAPI from "@/lib/stripeApi";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Record } from "pocketbase";
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   function calculateOrderAmount(cartItems: ProductList) {
@@ -44,6 +46,14 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const description: string = payload.description;
   const receipt_email: string = payload.receipt_email;
   const shipping: Shipping = payload.shipping;
+
+  for (const item of cartItems) {
+    const current = await pb.collection("products").getOne(item.id);
+
+    if (current.stock < item.quantity) {
+      return res.status(400).json({ message: "Items no longer in stock" });
+    }
+  }
 
   let paymentIntent;
 

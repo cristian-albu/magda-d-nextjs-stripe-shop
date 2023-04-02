@@ -2,7 +2,9 @@ import Footer from "@/components/Footer";
 import Gdpr from "@/components/Gdpr/Gdpr";
 import Nav from "@/components/Nav";
 import { CartProvider } from "@/contexts/CartProvider";
-import PrivacyContext from "@/components/Gdpr/PrivacyContext";
+import PrivacyContext, {
+  PrivacyContext as PrivContext,
+} from "@/components/Gdpr/PrivacyContext";
 import "@/styles/globals.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -11,8 +13,9 @@ import type { AppProps } from "next/app";
 import { Source_Sans_Pro } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import Cart from "@/components/Cart";
+import { GoogleAnalytics } from "nextjs-google-analytics";
+import { useContext, useEffect } from "react";
 
 const SourceSans = Source_Sans_Pro({
   weight: ["200", "400", "700"],
@@ -26,9 +29,27 @@ const stripePromise = loadStripe(
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  console.log(router.asPath.includes("checkout"));
+
+  const { cookieAnalytics }: any = useContext(PrivContext);
+
+  let gAnalytics = <></>;
+
+  useEffect(() => {
+    if (cookieAnalytics) {
+      gAnalytics = (
+        <>
+          <GoogleAnalytics
+            trackPageViews
+            gaMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+          />
+        </>
+      );
+    }
+  }, []);
+
   return (
     <>
+      {gAnalytics}
       <Head>
         <meta property="og:site_name" content="Magda Dimistrescu" />
         <meta property="og:type" content="website" />
@@ -48,12 +69,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <PrivacyContext>
           <CartProvider>
             <Elements stripe={stripePromise}>
-              {!router.asPath.includes("checkout") && (
-                <>
-                  <Nav route={router.asPath.split("/")} />
-                  <Cart />
-                </>
-              )}
+              {!router.asPath.includes("checkout") &&
+                !router.asPath.includes("succes") && (
+                  <>
+                    <Nav route={router.asPath.split("/")} />
+                    <Cart />
+                  </>
+                )}
 
               <AnimatePresence mode="wait">
                 <motion.div
@@ -79,8 +101,9 @@ export default function App({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </motion.div>
               </AnimatePresence>
-              <Gdpr />
-              <Footer />
+              {!router.asPath.includes("succes") && <Gdpr />}
+              {!router.asPath.includes("checkout") &&
+                !router.asPath.includes("succes") && <Footer />}
             </Elements>
           </CartProvider>
         </PrivacyContext>

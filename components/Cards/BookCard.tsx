@@ -2,11 +2,14 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { AiOutlineShopping } from "react-icons/ai";
 import CartContext from "@/contexts/CartProvider";
+import { PrivacyContext } from "../Gdpr/PrivacyContext";
 
 const BookCard = ({ product }: SingleProductObj) => {
   const { dispatch, REDUCER_ACTIONS, cart } = useContext(CartContext);
 
   const [clickAddToCart, setClickAddToCart] = useState(false);
+
+  const { langEn }: any = useContext(PrivacyContext);
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -62,20 +65,47 @@ const BookCard = ({ product }: SingleProductObj) => {
             {product.digital ? "E-book" : "Hardcover"}
           </p>
           <p>{product.summary}</p>
+          {product.stock < 4 && product.stock > 1 && !product.digital && (
+            <p className="italic text-red-500 font-bold">
+              {langEn
+                ? `Last ${product.stock} products`
+                : `Ultimele ${product.stock} produse`}
+            </p>
+          )}
+          {product.stock === 1 && !product.digital && (
+            <p className="italic text-red-500 font-bold">
+              {langEn ? `Last product` : `Ultimul produs`}
+            </p>
+          )}
+          {product.stock === 0 && !product.digital && (
+            <p className="italic text-red-500 font-bold">
+              {langEn ? `Out of stock` : `Nu mai este în stoc`}
+            </p>
+          )}
           <div className="flex items-center justify-between mt-5">
             <p className="text-2xl font-bold">{product.price} Lei</p>
-            <button
-              className={`btnPrimary2 ${
-                clickAddToCart
-                  ? "bg-grey hover:scale-[1] hover:bg-grey text-black cursor-not-allowed"
-                  : ""
-              }`}
-              disabled={clickAddToCart}
-              onClick={() => handleClick()}
-            >
-              <AiOutlineShopping />
-              {clickAddToCart ? "Produs în coş" : "Adaugă în coş"}
-            </button>
+            {product.stock > 0 ? (
+              <button
+                className={`btnPrimary2 ${
+                  clickAddToCart
+                    ? "bg-grey hover:scale-[1] hover:bg-grey text-black cursor-not-allowed"
+                    : ""
+                }`}
+                disabled={clickAddToCart}
+                onClick={() => handleClick()}
+              >
+                <AiOutlineShopping />
+                {clickAddToCart
+                  ? langEn
+                    ? "Product in cart"
+                    : "Produs în coş"
+                  : langEn
+                  ? "Add to cart"
+                  : "Adaugă în coş"}
+              </button>
+            ) : (
+              <p></p>
+            )}
           </div>
         </div>
       </div>

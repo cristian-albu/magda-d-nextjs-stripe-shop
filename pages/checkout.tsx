@@ -23,6 +23,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { cardStyle } from "@/data/checkoutCardStyle";
 import Image from "next/image";
+import Link from "next/link";
 
 const Checkout = () => {
   const router = useRouter();
@@ -110,7 +111,6 @@ const Checkout = () => {
   };
 
   const finalValidation = () => {
-    console.log(error);
     if (
       checkoutState.address.length <= 10 ||
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
@@ -157,8 +157,16 @@ const Checkout = () => {
           receipt_email: checkoutState.email,
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err: any) {
+      setProcessing(true);
+      if (err.response.data.message === "Items no longer in stock") {
+        setError({
+          ...error,
+          err: langEn
+            ? `Payment failed. Items out of stock`
+            : `Plata a eşuat. Produsele nu mai sunt în stoc`,
+        });
+      }
     }
     if (res && res.data.clientSecret && stripe && elements) {
       const clientSecret = res.data.clientSecret;
@@ -187,126 +195,149 @@ const Checkout = () => {
         <Wrapper>
           <div className="w-full flex justify-between flex-wrap items-center">
             <div className="w-full md:w-1/2 text-black md:text-white mb-5">
-              <h1 className="mb-5 text-2xl md:text-4xl">
-                {langEn ? "Products: " : "Produse:"}
-              </h1>
-              {cart.map((item: Product) => (
-                <div key={item.id} className="flex gap-3 mb-5">
-                  <Image
-                    src={item.image}
-                    width={50}
-                    height={50}
-                    alt=""
-                    className="w-[50px]"
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-lg font-bold">{item.title}</p>
-                    <p>{item.summary}</p>
-                    <div className="flex gap-3">
-                      <p>
-                        {langEn ? "Quantity: " : "Cantitate: "}
-                        {item.quantity}
-                      </p>
-                      <p>
-                        {langEn ? "Price: " : "Preţ: "}
-                        {item.price} lei
-                      </p>
+              <a href="/">{langEn ? "⬅️ Back to home" : "⬅️ Înapoi acasă"}</a>
+              {cart.length > 0 && (
+                <>
+                  <h1 className="mb-5 text-2xl md:text-4xl mt-10">
+                    {langEn ? "Products: " : "Produse:"}
+                  </h1>
+                  {cart.map((item: Product) => (
+                    <div key={item.id} className="flex gap-3 mb-5">
+                      <Image
+                        src={item.image}
+                        width={50}
+                        height={50}
+                        alt=""
+                        className="w-[50px]"
+                      />
+                      <div className="flex flex-col">
+                        <p className="text-lg font-bold">{item.title}</p>
+                        <p>{item.summary}</p>
+                        <div className="flex gap-3">
+                          <p>
+                            {langEn ? "Quantity: " : "Cantitate: "}
+                            {item.quantity}
+                          </p>
+                          <p>
+                            {langEn ? "Price: " : "Preţ: "}
+                            {item.price} lei
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-              <p className="text-lg font-bold pl-[62px]">Total: {totalPrice}</p>
+                  ))}
+                  <p className="text-lg font-bold pl-[62px] mb-10">
+                    Total: {totalPrice}
+                  </p>{" "}
+                </>
+              )}
             </div>
             <div className="w-full md:w-1/2">
-              <form
-                className=" p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem]"
-                onChange={({ target }) => handleFormData(target)}
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <div className="w-full h-full flex flex-col p-[1rem] md:p-[2rem] bg-white rounded-md  justify-start items-start">
-                  <div className="w-full grid grid-cols-2 gap-x-5 mt-3">
-                    <div className="col-span-2">
-                      <CheckoutNameInput />
-                    </div>
-                    <div className="col-span-2">
-                      <CheckoutEmailInput />
-                    </div>
+              {cart.length > 0 ? (
+                <form
+                  className=" p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem]"
+                  onChange={({ target }) => handleFormData(target)}
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <div className="w-full h-full flex flex-col p-[1rem] md:p-[2rem] bg-white rounded-md  justify-start items-start">
+                    <div className="w-full grid grid-cols-2 gap-x-5 mt-3">
+                      <div className="col-span-2">
+                        <CheckoutNameInput />
+                      </div>
+                      <div className="col-span-2">
+                        <CheckoutEmailInput />
+                      </div>
 
-                    <div className="col-span-2">
-                      <CheckoutShippingInput />{" "}
+                      <div className="col-span-2">
+                        <CheckoutShippingInput />{" "}
+                      </div>
+
+                      <CheckoutCityInput />
+                      <CheckoutPostalCode />
+
+                      <div className="col-span-2">
+                        <p className={styles.inputLabelP}>
+                          {langEn ? "Card number" : "Numărul cardului"}
+                        </p>
+                        <CardNumberElement
+                          className={styles.inputText}
+                          options={cardStyle}
+                          onChange={cardHandleChange}
+                        />
+                      </div>
+                      <div>
+                        <p className={styles.inputLabelP}>
+                          {langEn
+                            ? "Card expiry date"
+                            : "Data expirării cardului"}
+                        </p>
+                        <CardExpiryElement
+                          className={styles.inputText}
+                          options={cardStyle}
+                          onChange={cardHandleChange}
+                        />
+                      </div>
+                      <div>
+                        <p className={styles.inputLabelP}>
+                          {langEn ? "CVC Number" : "Codul CVC"}
+                        </p>
+                        <CardCvcElement
+                          className={styles.inputText}
+                          options={cardStyle}
+                          onChange={cardHandleChange}
+                        />
+                      </div>
                     </div>
-
-                    <CheckoutCityInput />
-                    <CheckoutPostalCode />
-
-                    <div className="col-span-2">
-                      <p className={styles.inputLabelP}>
-                        {langEn ? "Card number" : "Numărul cardului"}
-                      </p>
-                      <CardNumberElement
-                        className={styles.inputText}
-                        options={cardStyle}
-                        onChange={cardHandleChange}
+                    <div className="flex flex-wrap item-center gap-1 mb-5">
+                      <Checkbox
+                        name="contactCheckBox"
+                        text={langEn ? "I agree with the" : "Sunt de acord cu"}
+                        checked={checkboxState}
+                        onChange={handlePrivacy}
                       />
-                    </div>
-                    <div>
-                      <p className={styles.inputLabelP}>
+
+                      <button onClick={openPrivacy} className="text-purple">
                         {langEn
-                          ? "Card expiry date"
-                          : "Data expirării cardului"}
-                      </p>
-                      <CardExpiryElement
-                        className={styles.inputText}
-                        options={cardStyle}
-                        onChange={cardHandleChange}
-                      />
+                          ? "Privacy policy*"
+                          : "Politica de confidenţialitate*"}
+                      </button>
                     </div>
-                    <div>
-                      <p className={styles.inputLabelP}>
-                        {langEn ? "CVC Number" : "Codul CVC"}
-                      </p>
-                      <CardCvcElement
-                        className={styles.inputText}
-                        options={cardStyle}
-                        onChange={cardHandleChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap item-center gap-1 mb-5">
-                    <Checkbox
-                      name="contactCheckBox"
-                      text={langEn ? "I agree with the" : "Sunt de acord cu"}
-                      checked={checkboxState}
-                      onChange={handlePrivacy}
-                    />
 
-                    <button onClick={openPrivacy} className="text-purple">
+                    {finalValidation() ? (
+                      <button
+                        className="btnPrimary2"
+                        onClick={handlePaymentIntent}
+                        disabled={processing}
+                      >
+                        {processing
+                          ? "Processing"
+                          : langEn
+                          ? "Place order"
+                          : "Plasează comanda"}
+                      </button>
+                    ) : (
+                      <button className="btnPrimary2 " disabled>
+                        {langEn ? "Place order" : "Plasează comanda"}
+                      </button>
+                    )}
+                    {error.err.length > 1 && (
+                      <p className="mt-3 text-red-500 font-bold">{error.err}</p>
+                    )}
+                  </div>
+                </form>
+              ) : (
+                <div className=" p-[8px] shadow-black/40 shadow-2xl bg-gradient-to-tr from-pink to-yellow rounded-lg w-full max-w-[500px] mx-auto mb-[3rem]">
+                  <div className="w-full h-full flex flex-col p-[1rem] md:p-[2rem] bg-white rounded-md  justify-center items-center">
+                    <p className="text-3xl">😕</p>
+
+                    <p>
                       {langEn
-                        ? "Privacy policy*"
-                        : "Politica de confidenţialitate*"}
-                    </button>
+                        ? "You have nothing in your cart"
+                        : "Nu ai nimic în coş"}
+                    </p>
                   </div>
-
-                  {finalValidation() ? (
-                    <button
-                      className="btnPrimary2"
-                      onClick={handlePaymentIntent}
-                      disabled={processing}
-                    >
-                      {processing
-                        ? "Processing"
-                        : langEn
-                        ? "Place order"
-                        : "Plasează comanda"}
-                    </button>
-                  ) : (
-                    <button className="btnPrimary2 " disabled>
-                      {langEn ? "Place order" : "Plasează comanda"}
-                    </button>
-                  )}
-                  {error.err.length > 1 && <p>{error.err}</p>}
                 </div>
-              </form>
+              )}
             </div>
           </div>
         </Wrapper>

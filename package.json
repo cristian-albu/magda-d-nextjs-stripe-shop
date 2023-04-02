@@ -23,6 +23,7 @@
     "framer-motion": "^10.3.4",
     "micro": "^10.0.1",
     "next": "13.2.4",
+    "nextjs-google-analytics": "^2.3.3",
     "nodemailer": "^6.9.1",
     "pocketbase": "^0.12.1",
     "react": "18.2.0",
