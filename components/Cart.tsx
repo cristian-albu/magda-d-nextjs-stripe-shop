@@ -3,10 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useCallback } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { PrivacyContext } from "./Gdpr/PrivacyContext";
 
 const Cart = () => {
   const { setOpenCart, openCart, dispatch, REDUCER_ACTIONS, cart, totalPrice } =
     useContext(CartContext);
+
+  const { langEn }: any = useContext(PrivacyContext);
 
   const AddMore = useCallback(
     (product: Product) => {
@@ -50,7 +53,7 @@ const Cart = () => {
         }"`}
       >
         <p className="text-xl mt-[4rem] md:text-3xl mb-5 relative pl-10">
-          Coşul tău:
+          {langEn ? "Your cart:" : "Coşul tău:"}
         </p>
         {cart.length > 0 ? (
           <div className="w-full relative overflow-y-auto overflow-x-visible pb-2 pl-10 flex flex-col justify-start items-start">
@@ -74,9 +77,9 @@ const Cart = () => {
                     {item.summary.length < 20 && "..."}
                   </p>
                   <div className="flex gap-2 flex-wrap text-gray-500">
-                    <p>Preţ</p>
+                    <p>{langEn ? "Price" : "Preţ"}</p>
                     <p className="text-pink">{item.price} lei</p>
-                    <p>Cantitate:</p>
+                    <p>{langEn ? "Quantity" : "Cantitate:"}</p>
                     {!item.digital && (
                       <button onClick={() => RemoveOneFromCart(item)}>-</button>
                     )}
@@ -84,7 +87,9 @@ const Cart = () => {
                     {!item.digital && (
                       <button onClick={() => AddMore(item)}>+</button>
                     )}
-                    <button onClick={() => RemoveFromCart(item)}>Şterge</button>
+                    <button onClick={() => RemoveFromCart(item)}>
+                      {langEn ? "Remove" : "Şterge"}
+                    </button>
                   </div>
                   <div className="flex gap-2 text-gray-500">
                     <p>Subtotal:</p>
@@ -103,12 +108,14 @@ const Cart = () => {
                 href={"/checkout"}
                 onClick={() => setOpenCart(false)}
               >
-                Mergi la casă
+                {langEn ? "Go to checkout" : "Mergi la casă"}
               </Link>
             )}
           </div>
         ) : (
-          <div className="pl-10">Nu ai nimic în coş</div>
+          <div className="pl-10">
+            {langEn ? "Your cart is empty" : "Nu ai nimic în coş"}
+          </div>
         )}
 
         <button
@@ -116,7 +123,7 @@ const Cart = () => {
           className="btnPrimary mt-auto ml-10"
         >
           <AiOutlineClose />
-          Închide
+          {langEn ? "Close" : "Închide"}
         </button>
       </div>
     </div>

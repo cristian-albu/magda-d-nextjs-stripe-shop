@@ -106,6 +106,15 @@ const ContactPage = () => {
   const [generalError, setGeneralError] = useState(false);
   // ? Handle the email submit
 
+  const handleCheckbox = () => {
+    checkboxState;
+    setCheckboxState((checkboxState) => !checkboxState);
+
+    if (!checkboxState === true) {
+      setCookiePref(true);
+      setCookieAnalytics(true);
+    }
+  };
   async function handleSubmit(e: any) {
     e.preventDefault();
 
@@ -159,7 +168,11 @@ const ContactPage = () => {
                   <BiMessageDetail />
                 </div>
 
-                <h1 className="text-2xl md:text-5xl mb-5 ">{`Trimite un mesaj sau găseşte-mă aici:`}</h1>
+                <h1 className="text-2xl md:text-5xl mb-5 ">
+                  {langEn
+                    ? "Send me a message or find me here:"
+                    : `Trimite un mesaj sau găseşte-mă aici:`}
+                </h1>
                 <div className="flex gap-5 flex-wrap">
                   <a
                     href="https://www.facebook.com/magda.dimitrescu"
@@ -196,19 +209,19 @@ const ContactPage = () => {
                   >
                     <div className="w-full h-full flex flex-col p-[1rem] md:p-[2rem] bg-white rounded-md">
                       <TextInput
-                        name="Nume*"
+                        name={langEn ? "Name*" : "Nume*"}
                         state={nameState}
                         setState={setNameState}
                         validationCheck={nameInvalidCheck}
                       />
                       <TextInput
-                        name="Email*"
+                        name={langEn ? "Email*" : "Email*"}
                         state={emailState}
                         setState={setEmailState}
                         validationCheck={emailInvalidCheck}
                       />
                       <TextInput
-                        name="Mesaj*"
+                        name={langEn ? "Message*" : "Mesaj*"}
                         state={messageState}
                         setState={setMessageState}
                         validationCheck={messageInvalidCheck}
@@ -217,21 +230,25 @@ const ContactPage = () => {
                       <div className="flex flex-wrap item-center gap-1">
                         <Checkbox
                           name="contactCheckBox"
-                          text="Sunt de acord cu"
-                          checked={checkboxState}
-                          onChange={() =>
-                            setCheckboxState((checkboxState) => !checkboxState)
+                          text={
+                            langEn ? "I agree with the " : "Sunt de acord cu"
                           }
+                          checked={checkboxState}
+                          onChange={handleCheckbox}
                         />
 
                         <button onClick={openPrivacy} className="text-purple">
-                          Politica de confidenţialitate*
+                          {langEn
+                            ? "Privacy policy"
+                            : "Politica de confidenţialitate*"}
                         </button>
                       </div>
                       <div className="flex flex-wrap items-center justify-between">
                         {generalError && (
                           <p className="text-red-400">
-                            Trebuie să completaţi toate câmpurile
+                            {langEn
+                              ? "You must fill all the required fields"
+                              : "Trebuie să completaţi toate câmpurile"}
                           </p>
                         )}
                         <button
@@ -240,7 +257,7 @@ const ContactPage = () => {
                           name="submit"
                         >
                           <BiMessageDetail />
-                          Trimite
+                          {langEn ? "Send" : "Trimite"}
                         </button>
                       </div>
                     </div>
@@ -252,10 +269,14 @@ const ContactPage = () => {
                 <div className="bg-white p-[2rem] shadow-black/20 shadow-2xl rounded-md w-full  md:w-1/2 mb-[3rem] flex justify-center items-center flex-col">
                   <p className="text-2xl">✅</p>
                   <p className="text-2xl mb-5">
-                    Mesajul tău a fost trimis cu success
+                    {langEn
+                      ? "Your message has been sent successfuly"
+                      : "Mesajul tău a fost trimis cu success"}
                   </p>
                   <Link href={"/"} className="btnPrimary2">
-                    Mergi înapoi pe prima pagină
+                    {langEn
+                      ? "Go to the home page"
+                      : "Mergi înapoi pe prima pagină"}
                   </Link>
                 </div>
               )}

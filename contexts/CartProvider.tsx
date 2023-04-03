@@ -35,7 +35,10 @@ const useCartContext = (initCartState: CartStateType) => {
     return REDUCER_ACTION_TYPE;
   }, []);
 
-  const totalItems: number = state.cart.length;
+  const totalItems: number = state.cart.filter(
+    (item: Product) =>
+      item.id != "nvpkiir4gkmyozd" && item.id != "sozc6w3vydixiwj"
+  ).length;
 
   const totalPrice = useMemo(() => {
     return new Intl.NumberFormat("en-US", {
