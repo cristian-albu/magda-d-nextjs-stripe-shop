@@ -7,6 +7,7 @@ import {
 
 interface HomePageData {
   valueProp: string;
+  valueProp2: string;
   valueDesc: string;
   features: Array<{ question: string; answer: string }>;
   benefits: string[];
@@ -18,8 +19,9 @@ export const homePageData: HomePageData = {
   valueProp: `Dedic aceasta carte tuturor celor care cauta sa inteleaga mai multe despre ei insisi, 
   natura umana precum si despre natura lucrurilor, celor care Il cauta pe Dumnezeu si le-ar folosi calauzire, 
   celor care au venit acum pe Pamant sa se Inalte, celor care vor sa revina la starea naturala de a fi, si anume, de a iubi. 
-  Asa sa ne ajute Dumnezeu! Multumesc Domnului!`,
-  valueDesc: `Cartea aceasta s-a nascut intai ca titlu si o adunare de esee in 2014, apoi a fost continuata si scrisa in 2022 si finalizata in 2023`,
+  `,
+  valueProp2: `Asa sa ne ajute Dumnezeu! Multumesc Domnului!`,
+  valueDesc: `Cartea aceasta s-a nascut intai ca titlu si câteva pagini in 2014, apoi a fost continuata si scrisa in 2022 si finalizata in 2023`,
   features: [
     {
       question: `Ce este această carte?`,
@@ -83,7 +85,8 @@ export const homePageDataEn: HomePageData = {
   valueProp: `I dedicate this book to all who are looking
 to understand more about themselves, human nature as well as the nature of things, to
 all who are looking for God and they could use guidance, to all who came now on Earth
-to ascend, to all who want to get back to out natural state of being, and that is, to love. So help us God! Thank you, Lord!`,
+to ascend, to all who want to get back to out natural state of being, and that is, to love. `,
+  valueProp2: `So help us God! Thank you, Lord!`,
   valueDesc: `This book started with a title and a few pages written in 2014, continued in 2022 and
 finished in 2023.`,
   features: [

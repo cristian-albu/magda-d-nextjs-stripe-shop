@@ -8,7 +8,7 @@ import {
 import Section from "@/components/Section";
 import Wrapper from "@/components/Wrapper";
 import CartContext from "@/contexts/CartProvider";
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback, useEffect } from "react";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -24,8 +24,14 @@ import { useRouter } from "next/router";
 import { cardStyle } from "@/data/checkoutCardStyle";
 import Image from "next/image";
 import Link from "next/link";
+import pb from "@/lib/pocketBaseClient";
+import parsePbImage from "@/lib/parseImage";
+import { Record } from "pocketbase";
+import { InferGetServerSidePropsType, NextPage } from "next";
 
-const Checkout = () => {
+const Checkout: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ transport, shipping }) => {
   const router = useRouter();
   const { cart, totalPrice, dispatch, REDUCER_ACTIONS } =
     useContext(CartContext);
@@ -41,6 +47,13 @@ const Checkout = () => {
     setCookieAnalytics,
     handleSave,
   }: any = useContext(PrivacyContext);
+
+  const shippingEnExists =
+    cart.findIndex((item: Product) => item.id === "nvpkiir4gkmyozd") > 0;
+  const shippingRoExists =
+    cart.findIndex((item: Product) => item.id === "sozc6w3vydixiwj") > 0;
+  const shippingExists =
+    cart.findIndex((item: Product) => item.id === "bkupshp1") > 0;
 
   const [checkoutFade, setCheckoutFade] = useState(false);
 
@@ -132,6 +145,74 @@ const Checkout = () => {
     }
   };
 
+  const backUpTransport: Product = {
+    id: "bkupshp1",
+    title: "Transport",
+    price: 25,
+    slug: "transport",
+    quantity: 1,
+    stock: 9999,
+    digital: true,
+    image: "",
+    summary: "transport",
+  };
+
+  const shippingItem = langEn
+    ? shipping
+      ? shipping
+      : backUpTransport
+    : transport
+    ? transport
+    : backUpTransport;
+
+  const addToCart = useCallback(
+    (shipItem: Product) =>
+      dispatch({
+        type: REDUCER_ACTIONS.ADD,
+        payload: { ...shipItem, quantity: 1 },
+      }),
+    [dispatch, REDUCER_ACTIONS.ADD, shippingItem]
+  );
+
+  const RemoveShippingFromCart = useCallback(
+    (product: Product) => {
+      dispatch({
+        type: REDUCER_ACTIONS.REMOVE,
+        payload: { ...product, quantity: 1 },
+      });
+    },
+    [dispatch]
+  );
+
+  const hasPhysicalProducts =
+    cart.filter((item: Product) => !item.digital).length > 0;
+
+  useEffect(() => {
+    if (!hasPhysicalProducts) {
+      setCheckoutState({
+        ...checkoutState,
+        address: "Digital products",
+        zip: "000000",
+        city: "Digital",
+      });
+    }
+    if (hasPhysicalProducts && cart.length > 0) {
+      if (!shippingExists && !shippingEnExists && !shippingRoExists) {
+        addToCart(shippingItem);
+      } else if (langEn && shippingRoExists) {
+        RemoveShippingFromCart(
+          cart[cart.findIndex((item: Product) => item.id === "sozc6w3vydixiwj")]
+        );
+        addToCart(shippingItem);
+      } else if (!langEn && shippingEnExists) {
+        RemoveShippingFromCart(
+          cart[cart.findIndex((item: Product) => item.id === "nvpkiir4gkmyozd")]
+        );
+        addToCart(shippingItem);
+      }
+    }
+  }, []);
+
   const handlePaymentIntent = async (e: any) => {
     e.preventDefault();
     handleSave();
@@ -139,25 +220,27 @@ const Checkout = () => {
     let res;
 
     try {
-      res = await axios.post("/api/payment-intent", {
-        payload: {
-          cartItems: cart,
-          shipping: {
-            name: checkoutState.name,
-            address: {
-              line1: checkoutState.address,
-              city: checkoutState.city,
-              postal_code: checkoutState.zip,
-            },
+      const payload = {
+        cartItems: cart,
+        shipping: {
+          name: checkoutState.name,
+          address: {
+            line1: checkoutState.address,
+            city: checkoutState.city,
+            postal_code: checkoutState.zip,
           },
-          description: `Comanda: ${cart.map(
-            (item: Product, index: number) =>
-              `${item.title}: ${item.price} lei X ${item.quantity}${
-                index < cart.length - 1 ? ", " : ""
-              }`
-          )}`,
-          receipt_email: checkoutState.email,
         },
+        description: `Comanda: ${cart.map(
+          (item: Product, index: number) =>
+            `${item.title}: ${item.price} lei X ${item.quantity}${
+              index < cart.length - 1 ? ", " : ""
+            }`
+        )}`,
+        receipt_email: checkoutState.email,
+      };
+
+      res = await axios.post("/api/payment-intent", {
+        payload: payload,
       });
     } catch (err: any) {
       setProcessing(true);
@@ -212,16 +295,18 @@ const Checkout = () => {
                         width={50}
                         height={50}
                         alt=""
-                        className="w-[50px]"
+                        className="w-[50px] h-auto object-contain"
                       />
                       <div className="flex flex-col">
                         <p className="text-lg font-bold">{item.title}</p>
                         <p>{item.summary}</p>
                         <div className="flex gap-3">
-                          <p>
-                            {langEn ? "Quantity: " : "Cantitate: "}
-                            {item.quantity}
-                          </p>
+                          {item.id != shippingItem.id && (
+                            <p>
+                              {langEn ? "Quantity: " : "Cantitate: "}
+                              {item.quantity}
+                            </p>
+                          )}
                           <p>
                             {langEn ? "Price: " : "Preţ: "}
                             {item.price} lei
@@ -254,12 +339,16 @@ const Checkout = () => {
                         <CheckoutEmailInput />
                       </div>
 
-                      <div className="col-span-2">
-                        <CheckoutShippingInput />{" "}
-                      </div>
+                      {hasPhysicalProducts && (
+                        <>
+                          <div className="col-span-2">
+                            <CheckoutShippingInput />{" "}
+                          </div>
 
-                      <CheckoutCityInput />
-                      <CheckoutPostalCode />
+                          <CheckoutCityInput />
+                          <CheckoutPostalCode />
+                        </>
+                      )}
 
                       <div className="col-span-2">
                         <p className={styles.inputLabelP}>
@@ -357,3 +446,37 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+export const getServerSideProps = async () => {
+  try {
+    const coll = "products";
+    const items = await Promise.all([
+      pb.collection(coll).getOne("sozc6w3vydixiwj"),
+      pb.collection(coll).getOne("nvpkiir4gkmyozd"),
+    ]);
+
+    const data: ProductList = items.map((item: Record) => ({
+      id: item.id,
+      title: item.title,
+      slug: item.slug,
+      price: item.price,
+      summary: item.summary,
+      stock: item.stock,
+      digital: item.productTypeDigital,
+      image: parsePbImage(coll, item.id, item.image),
+      quantity: 0,
+    }));
+
+    const transport = data[0];
+    const shipping = data[1];
+
+    return {
+      props: { transport, shipping },
+    };
+  } catch (error) {
+    console.error("Error fetching product data:", error);
+    return {
+      props: { item_ebook: null, item_hardcover: null },
+    };
+  }
+};

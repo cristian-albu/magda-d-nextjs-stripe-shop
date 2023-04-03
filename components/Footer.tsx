@@ -59,6 +59,7 @@ function Footer() {
                 icon?: React.ReactElement;
               }) => (
                 <a
+                  key={item.link}
                   href={item.link}
                   rel="noopener noreferrer"
                   target="_blank"

@@ -17,6 +17,7 @@ const HeroSection = ({ langEn }: { langEn: boolean }) => {
         <div className="relative flex flex-col  items-start w-full max-w-[80%] order-2 md:order-1 mt-10 md:mt-0">
           <h1 className="text-5xl font-bold">Magda Dimitrescu</h1>
           <p className="my-5">{data.valueProp}</p>
+          <p className="my-5">{data.valueProp2}</p>
           <p className="my-5"> {data.valueDesc}</p>
         </div>
 

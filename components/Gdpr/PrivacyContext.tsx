@@ -8,6 +8,7 @@ import React, {
 } from "react";
 
 import { setCookie, getCookie, hasCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 export type PrivacyProps = {
   showPrivacy: boolean;
@@ -17,6 +18,7 @@ export type PrivacyProps = {
 export const PrivacyContext: any = createContext([]);
 
 export default ({ children }: ChildrenType): ReactElement => {
+  const router = useRouter();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);

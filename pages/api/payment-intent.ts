@@ -69,10 +69,9 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         data: JSON.stringify(
           cartItems.map((item: Product) => ({
             id: item.id,
-            title: item.title,
-            price: item.price,
-            quantity: item.quantity,
-            digital: item.digital,
+            p: item.price,
+            q: item.quantity,
+            d: item.digital,
           }))
         ),
       },

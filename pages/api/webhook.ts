@@ -97,17 +97,17 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       for (const item of orderItems) {
         if (
           typeof item.id === "string" &&
-          typeof item.quantity === "number" &&
-          typeof item.digital === "boolean"
+          typeof item.q === "number" &&
+          typeof item.d === "boolean"
         ) {
           // Find the corresponding record in the products collection and update its stock if it's a physical product and there's enough stock available.
           const currentRecord = records.findIndex(
             (e: Record) => e.id === item.id
           );
 
-          if (!item.digital && records[currentRecord].stock >= item.quantity) {
+          if (!item.d && records[currentRecord].stock >= item.q) {
             await pb.collection("products").update(records[currentRecord].id, {
-              stock: records[currentRecord].stock - item.quantity,
+              stock: records[currentRecord].stock - item.q,
             });
           }
         } else {

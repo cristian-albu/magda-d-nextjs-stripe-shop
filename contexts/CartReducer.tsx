@@ -89,14 +89,34 @@ export const reducer = (
 
         const quantity: number = itemExists ? itemExists.quantity - 1 : 1;
 
+        // Find shipping product
+
+        const shippingProduct = filteredCart.filter(
+          (item: Product) =>
+            item.id === "bkupshp1" ||
+            item.id === "sozc6w3vydixiwj" ||
+            item.id === "nvpkiir4gkmyozd"
+        );
+
+        let outputCart = filteredCart;
+
+        if (shippingProduct.length > 0 && filteredCart.length === 1) {
+          outputCart = filteredCart.filter(
+            (item: Product) =>
+              item.id != "bkupshp1" &&
+              item.id != "sozc6w3vydixiwj" &&
+              item.id != "nvpkiir4gkmyozd"
+          );
+        }
+
         let output;
 
         if (quantity < 1) {
-          output = { ...state, cart: [...filteredCart] };
+          output = { ...state, cart: [...outputCart] };
         } else {
           output = {
             ...state,
-            cart: [...filteredCart, { ...action.payload, quantity }],
+            cart: [...outputCart, { ...action.payload, quantity }],
           };
         }
 
@@ -116,7 +136,27 @@ export const reducer = (
           (item) => item.id != id
         );
 
-        const output = { ...state, cart: [...filteredCart] };
+        // Find shipping product
+
+        const shippingProduct = filteredCart.filter(
+          (item: Product) =>
+            item.id === "bkupshp1" ||
+            item.id === "sozc6w3vydixiwj" ||
+            item.id === "nvpkiir4gkmyozd"
+        );
+
+        let outputCart = filteredCart;
+
+        if (shippingProduct.length > 0 && filteredCart.length === 1) {
+          outputCart = filteredCart.filter(
+            (item: Product) =>
+              item.id != "bkupshp1" &&
+              item.id != "sozc6w3vydixiwj" &&
+              item.id != "nvpkiir4gkmyozd"
+          );
+        }
+
+        const output = { ...state, cart: [...outputCart] };
         localStorage.setItem("state", JSON.stringify(output));
         return output;
       }

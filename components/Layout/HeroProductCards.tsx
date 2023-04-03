@@ -8,7 +8,7 @@ const HeroProductCards = ({ ebook, hardcover, langEn }: SingleProductObj) => {
   return (
     <Section>
       <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center max-w-[1200px] w-full mx-auto md:gap-10 lg:gap-0">
-        <BookCard product={ebook} />
+        <BookCard product={hardcover} />
         <div className="col-span-1 w-full flex justify-start items-start flex-col ">
           <h2 className="text-4xl my-5">
             {langEn ? "About the book" : "Despre carte"}
@@ -44,7 +44,7 @@ const HeroProductCards = ({ ebook, hardcover, langEn }: SingleProductObj) => {
           </ul>
         </div>
         <div className="order-1 md:order-2">
-          <BookCard product={hardcover} />
+          <BookCard product={ebook} />
         </div>
       </div>
     </Section>

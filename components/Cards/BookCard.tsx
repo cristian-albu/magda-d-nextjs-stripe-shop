@@ -27,7 +27,7 @@ const BookCard = ({ product }: SingleProductObj) => {
         setClickAddToCart(itemExists ? true : false);
       }
     }
-  }, [cart]);
+  }, [cart, langEn]);
 
   const onAddToCart = useCallback(
     () =>
@@ -39,12 +39,8 @@ const BookCard = ({ product }: SingleProductObj) => {
   );
 
   const handleClick = useCallback(() => {
-    if (!clickAddToCart) {
-      onAddToCart();
-    }
-
-    setClickAddToCart(true);
-  }, [clickAddToCart, onAddToCart]);
+    onAddToCart();
+  }, [clickAddToCart, onAddToCart, langEn]);
 
   return (
     <div className="bg-gradient-to-tr from-pink to-yellow shadow-pink/20 shadow-2xl rounded-3xl overflow-hidden p-2 w-full md:max-w-[350px] hover:shadow-yellow/50 transition duration-300 relative">
