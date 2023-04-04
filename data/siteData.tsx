@@ -91,19 +91,20 @@ to ascend, to all who want to get back to out natural state of being, and that i
 finished in 2023.`,
   features: [
     {
-      question: `Ce este această carte?`,
-      answer: `Un suport scris despre cum sa te înalți`,
+      question: `What is this book?`,
+      answer: `A written support about how to ascend`,
     },
-    { question: `Care a fost inspiraţia?`, answer: `Informații esoterice` },
+    { question: `What was the inspiration?`, answer: `Esoteric Knowledge` },
     {
-      question: `Ce subiecte sunt în carte?`,
-      answer: `Despre Dumnezeu, Dragoste, Lumea Interioară, Lumea Exterioară, Poezii, Afirmații, Rugăciuni, Meditații`,
+      question: `What subjects are being covered?`,
+      answer: `About God, Love, Internal World, External World, Poems, Affirmations,
+      Prayers, Meditations`,
     },
   ],
   benefits: [
-    `Te va inspira să te cunoști pe tine`,
-    `Te va inspira să cunoști mai multe despre lumea înconjurătoare`,
-    `Te va ajuta sa îți clarifici unele răspunsuri `,
+    `It will inspire you to know thyself`,
+    `It will inspire you to know more about the outside world`,
+    `It will help you clarify, it will give you some answers `,
   ],
   testimonials: [
     {
