@@ -32,24 +32,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const { cookieAnalytics }: any = useContext(PrivContext);
 
-  let gAnalytics = <></>;
-
-  useEffect(() => {
-    if (cookieAnalytics) {
-      gAnalytics = (
-        <>
-          <GoogleAnalytics
-            trackPageViews
-            gaMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-          />
-        </>
-      );
-    }
-  }, []);
-
   return (
     <>
-      {gAnalytics}
+      {cookieAnalytics && (
+        <GoogleAnalytics
+          trackPageViews
+          gaMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+        />
+      )}
       <Head>
         <meta property="og:site_name" content="Magda Dimistrescu" />
         <meta property="og:type" content="website" />

@@ -1,7 +1,7 @@
 import CartContext from "@/contexts/CartProvider";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { PrivacyContext } from "./Gdpr/PrivacyContext";
 
@@ -40,6 +40,20 @@ const Cart = () => {
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    console.log(cart);
+    RemoveFromCart(
+      cart[
+        cart.findIndex(
+          (item: Product) =>
+            item.id === "sozc6w3vydixiwj" ||
+            item.id === "nvpkiir4gkmyozd" ||
+            item.id === "bkupshp1"
+        )
+      ]
+    );
+  }, [openCart]);
 
   return (
     <div

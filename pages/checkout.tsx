@@ -92,7 +92,7 @@ const Checkout: NextPage<
         type: REDUCER_ACTIONS.ADD,
         payload: { ...shipItem, quantity: 1 },
       }),
-    [dispatch, REDUCER_ACTIONS.ADD, shippingItem]
+    [dispatch, REDUCER_ACTIONS.ADD]
   );
 
   // Remove from cart function for the shipping product

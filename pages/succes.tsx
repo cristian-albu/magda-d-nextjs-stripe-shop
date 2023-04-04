@@ -1,10 +1,16 @@
 import { PrivacyContext } from "@/components/Gdpr/PrivacyContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 const Succes = () => {
   const { langEn }: any = useContext(PrivacyContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.reload();
+  }, []);
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center flex-col gap-5">
@@ -19,9 +25,9 @@ const Succes = () => {
           ? "Verify your email for more details"
           : "Verifică mail-ul pentru mai multe detalii"}
       </p>
-      <a href="/" className="btnPrimary2">
+      <Link href="/" className="btnPrimary2">
         {langEn ? "Go to the main page" : "Mergi pe pagina principală"}
-      </a>
+      </Link>
     </div>
   );
 };
