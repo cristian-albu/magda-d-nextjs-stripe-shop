@@ -21,16 +21,16 @@ function Footer() {
       link: "/",
       icon: <AiOutlineHome />,
     },
-    {
-      title: langEn ? "Shop" : "Magazin",
-      link: "/magazin",
-      icon: <AiOutlineShopping />,
-    },
-    {
-      title: langEn ? "About me" : "Despre mine",
-      link: "/despre-mine",
-      icon: <AiOutlineUser />,
-    },
+    // {
+    //   title: langEn ? "Shop" : "Magazin",
+    //   link: "/magazin",
+    //   icon: <AiOutlineShopping />,
+    // },
+    // {
+    //   title: langEn ? "About me" : "Despre mine",
+    //   link: "/despre-mine",
+    //   icon: <AiOutlineUser />,
+    // },
     {
       title: langEn ? "Contact" : "Contact",
       link: "/contact",
