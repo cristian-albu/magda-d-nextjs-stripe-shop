@@ -17,7 +17,7 @@ export type PrivacyProps = {
 
 export const PrivacyContext: any = createContext([]);
 
-export const privacy = ({ children }: ChildrenType): ReactElement => {
+export const Privacy = ({ children }: ChildrenType): ReactElement => {
   const router = useRouter();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
@@ -156,4 +156,4 @@ export const privacy = ({ children }: ChildrenType): ReactElement => {
   );
 };
 
-export default privacy;
+export default Privacy;
