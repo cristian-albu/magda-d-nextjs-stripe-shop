@@ -200,8 +200,8 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const finalValidation = () => {
     if (
       checkoutState.address.length <= 10 ||
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-        checkoutState.address
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+        checkoutState.email
       ) ||
       checkoutState.name.length < 1 ||
       !checkboxState ||
