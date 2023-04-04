@@ -40,7 +40,7 @@ const BookCard = ({ product }: SingleProductObj) => {
 
   const handleClick = useCallback(() => {
     onAddToCart();
-  }, [clickAddToCart, onAddToCart, langEn]);
+  }, [clickAddToCart, onAddToCart, langEn, REDUCER_ACTIONS.ADD]);
 
   return (
     <div className="bg-gradient-to-tr from-pink to-yellow shadow-pink/20 shadow-2xl rounded-3xl overflow-hidden p-2 w-full md:max-w-[350px] hover:shadow-yellow/50 transition duration-300 relative">

@@ -25,7 +25,12 @@ import Image from "next/image";
 import pb from "@/lib/pocketBaseClient";
 import parsePbImage from "@/lib/parseImage";
 import { Record } from "pocketbase";
-import { InferGetServerSidePropsType, NextPage } from "next";
+import {
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+  NextPage,
+} from "next";
+import Link from "next/link";
 
 // Provide a backup transport in case no transport is retrieved from the server
 const backUpTransport: Product = {
@@ -40,9 +45,10 @@ const backUpTransport: Product = {
   summary: "transport",
 };
 
-const Checkout: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ transport, shipping }) => {
+const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  transport,
+  shipping,
+}) => {
   // Initializing a new router object using the useRouter hook.
   const router = useRouter();
 
@@ -55,7 +61,7 @@ const Checkout: NextPage<
     dispatch({
       type: REDUCER_ACTIONS.REMOVE_ALL,
     });
-  }, [dispatch]);
+  }, [dispatch, REDUCER_ACTIONS.REMOVE_ALL]);
 
   // Destructuring values from the PrivacyContext component, setting the type of 'any' to the values.
   const {
@@ -103,7 +109,7 @@ const Checkout: NextPage<
         payload: { ...product, quantity: 1 },
       });
     },
-    [dispatch]
+    [dispatch, REDUCER_ACTIONS.REMOVE]
   );
 
   // Initializing form input that are not handled by stripe state variables with the useState hook, checkoutState.
@@ -322,7 +328,9 @@ const Checkout: NextPage<
         <Wrapper>
           <div className="w-full flex justify-between flex-wrap items-center">
             <div className="w-full md:w-1/2 text-black md:text-white mb-5">
-              <a href="/">{langEn ? "⬅️ Back to home" : "⬅️ Înapoi acasă"}</a>
+              <Link href="/">
+                {langEn ? "⬅️ Back to home" : "⬅️ Înapoi acasă"}
+              </Link>
               {cart.length > 0 && (
                 <>
                   <h1 className="mb-5 text-2xl md:text-4xl mt-10">
@@ -483,7 +491,7 @@ const Checkout: NextPage<
 
 export default Checkout;
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   try {
     const coll = "products";
     const items = await Promise.all([

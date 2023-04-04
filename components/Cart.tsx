@@ -28,7 +28,7 @@ const Cart = () => {
         payload: { ...product, quantity: 1 },
       });
     },
-    [dispatch]
+    [dispatch, REDUCER_ACTIONS.REMOVE]
   );
 
   const RemoveOneFromCart = useCallback(
@@ -38,7 +38,7 @@ const Cart = () => {
         payload: { ...product, quantity: 1 },
       });
     },
-    [dispatch]
+    [dispatch, REDUCER_ACTIONS.REMOVE_ONE]
   );
 
   useEffect(() => {
