@@ -4,8 +4,11 @@ You can find the project [here](https://magda-dimitrescu.vercel.app/) in test mo
 
 This project is made with: 
 - [NextJs](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Pocketbase](https://pocketbase.io/)
 - [Stripe](https://stripe.com/en-ro)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Nodemailer](https://nodemailer.com/about/)
 
 Main features used in this project are:
 - Pocketbase SQL Lite database deployed on fly.io with Product and Orders schemas with read/write validations.
