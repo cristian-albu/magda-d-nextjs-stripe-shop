@@ -1,14 +1,7 @@
 import React, { useContext } from "react";
 
-import {
-  AiOutlineCheckCircle,
-  AiOutlineSave,
-  AiOutlineSetting,
-} from "react-icons/ai";
-import { RxCrossCircled } from "react-icons/rx";
 import { PrivacyContext } from "@/components/Gdpr/PrivacyContext";
 import { staticData } from "@/components/Gdpr/GdprData";
-import { Checkbox } from "../Checkbox";
 import Banner from "./Banner";
 import Privacy from "./Privacy";
 import Preferences from "./Preferences";

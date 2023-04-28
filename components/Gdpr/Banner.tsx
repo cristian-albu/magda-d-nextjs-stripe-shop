@@ -1,5 +1,8 @@
 import { PrivacyContext } from "@/components/Gdpr/PrivacyContext";
-import { staticData } from "@/components/Gdpr/GdprData";
+import {
+  staticData as staticDataRo,
+  staticDataEn,
+} from "@/components/Gdpr/GdprData";
 import React, { useContext } from "react";
 import { AiOutlineCheckCircle, AiOutlineSetting } from "react-icons/ai";
 import { RxCrossCircled } from "react-icons/rx";
@@ -14,6 +17,8 @@ const Banner = () => {
     handleLang,
     langEn,
   }: any = useContext(PrivacyContext);
+
+  const staticData = langEn ? staticDataEn : staticDataRo;
 
   return (
     <div

@@ -1,5 +1,8 @@
 import { PrivacyContext } from "@/components/Gdpr/PrivacyContext";
-import { staticData } from "@/components/Gdpr/GdprData";
+import {
+  staticData as staticDataRo,
+  staticDataEn,
+} from "@/components/Gdpr/GdprData";
 import React, { useContext } from "react";
 import { Checkbox } from "../Checkbox";
 import { AiOutlineCheckCircle, AiOutlineSave } from "react-icons/ai";
@@ -24,6 +27,8 @@ const Preferences = () => {
   }: any = useContext(PrivacyContext);
 
   const router = useRouter();
+
+  const staticData = langEn ? staticDataEn : staticDataRo;
   return (
     <div
       className={`bg-[#fff] p-8 rounded-md drop-shadow-xl w-[100%] flex flex-col overflow-auto h-full max-h-[80vh] items-start justify-between max-w-[1200px]`}

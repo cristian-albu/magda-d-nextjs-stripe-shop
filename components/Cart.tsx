@@ -42,7 +42,6 @@ const Cart = () => {
   );
 
   useEffect(() => {
-    console.log(cart);
     RemoveFromCart(
       cart[
         cart.findIndex(

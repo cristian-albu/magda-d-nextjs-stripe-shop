@@ -8,8 +8,7 @@ const styles = {
   floatingIcons: `bg-[#97528E] w-[3rem] aspect-square absolute z-[10] rounded-full bg-no-repeat bg-center`,
 };
 
-const HeroSection = ({ langEn }: { langEn: boolean }) => {
-  const data = langEn ? homePageDataEn : homePageData;
+const HeroSection = ({ data }: { data: any }) => {
   return (
     <div className="relative min-h-[90vh] w-full text-white flex justify-items-center  items-center rounded-b-[2rem] overflow-hidden p-[2rem] md:p-[5rem] xl:p-[8rem] 2xl:p-[12rem]">
       <div className="mainGradient" />
