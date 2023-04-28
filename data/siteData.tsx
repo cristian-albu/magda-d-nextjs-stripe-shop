@@ -349,3 +349,48 @@ export const footerDataEn = {
     link: "https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO",
   },
 };
+
+export const termsDataEn = {
+  returnTitle: "Return policy",
+  returnPolicy: `As per the provisions of the Romanian Government Ordinance no. 34/2014, 
+  you can return products purchased online within 14 calendar days from the date of 
+  purchase without any penalty or need to state a reason. If you wish to return a product, 
+  please contact us and we will provide you with further instructions.`,
+  shippingTitle: `Shipping policy`,
+  shippingPolicy: `For orders containing physical products, we use DPD or other shipping companies and a 
+  shipping fee will be charged. The exact cost will depend on the shipping method, destination, and weight of the package. 
+  This will be displayed in your checkout session before you place and order.
+  Please note that shipping costs are non-refundable. 
+  
+  For e-books and other digital products, there are no shipping fees, and the products will be delivered to you electronically. 
+  Once you have completed your purchase, you will receive an email with a download link for your product. 
+  Please ensure that your email address is entered correctly to avoid any delays in receiving your purchase. 
+  All orders that include a physical product must be placed with a correct Romanian address, otherwise the order will be cancelled.
+  `,
+  transportLinks: [
+    { name: "DPD", link: "" },
+    { name: "Sameday", link: "https://sameday.ro" },
+  ],
+};
+
+export const termsDataRo = {
+  returnTitle: "Politica de retur",
+  returnPolicy: `Conform prevederilor Ordonanței Guvernului României nr. 34/2014, puteți returna produsele 
+  achiziționate online în termen de 14 zile calendaristice de la data achiziționării fără nicio 
+  penalitate sau nevoie de a invoca un motiv. Dacă doriți să returnați un produs, vă rugăm să ne 
+  contactați și vă vom oferi instrucțiuni suplimentare. 
+  `,
+  shippingTitle: `Politica de livrare`,
+  shippingPolicy: `Pentru comenzile care conțin produse fizice, folosim compania de transport DPD sau alte companii de transport 
+  și va fi percepută o taxă de livrare. Costul exact va depinde de metoda de livrare, destinație și greutatea 
+  coletului. Acestea vor fi afişate în sesiunea de checkout înainte de a da comanda. Vă rugăm să rețineți că costurile de livrare nu sunt rambursabile.
+  Pentru cărțile electronice și alte produse digitale nu există taxe de livrare și produsele vor fi livrate 
+  electronic. După ce ați finalizat achiziția, veți primi un e-mail cu un link de descărcare pentru produsul dvs. 
+  Vă rugăm să vă asigurați că adresa dvs. de e-mail este introdusă corect pentru a evita orice întârzieri în primirea achiziției. 
+  Toate comenzile care includ produse fizice trebuie să conţină o adresă corectă din România, altfel comanda va fi anulată. 
+  `,
+  transportLinks: [
+    { name: "DPD", link: "https://www.dpd.com/ro/ro/" },
+    { name: "Sameday", link: "https://sameday.ro" },
+  ],
+};

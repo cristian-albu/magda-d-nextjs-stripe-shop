@@ -26,11 +26,11 @@ function Footer() {
     //   link: "/magazin",
     //   icon: <AiOutlineShopping />,
     // },
-    // {
-    //   title: langEn ? "About me" : "Despre mine",
-    //   link: "/despre-mine",
-    //   icon: <AiOutlineUser />,
-    // },
+    {
+      title: langEn ? "About me" : "Despre mine",
+      link: "/despre-mine",
+      icon: <AiOutlineUser />,
+    },
     {
       title: langEn ? "Contact" : "Contact",
       link: "/contact",
@@ -82,6 +82,12 @@ function Footer() {
             <button onClick={openPrivacy} className="flex justify-start">
               📃 {langEn ? "Privacy policy" : "Politica de confidenţialitate"}
             </button>
+            <Link href={"/termeni-si-conditii"}>
+              🚚{" "}
+              {langEn
+                ? "Terms, returns, and shipping"
+                : "Termeni, retur şi transport"}
+            </Link>
             <a href={data.anpc.link} rel="noopener noreferrer" target="_blank">
               {data.anpc.title}
             </a>
