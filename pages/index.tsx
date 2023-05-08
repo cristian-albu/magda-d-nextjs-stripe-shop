@@ -53,7 +53,7 @@ const Index: NextPage<
               (item: { name: string; testimonial: string }, index: number) => (
                 <div
                   key={item.name}
-                  className={`flex flex-col justify-start items-start p-5 bg-white shadow-lg rounded-lg mb-10 w-[48%] ${
+                  className={`flex flex-col justify-start items-start p-5 bg-white shadow-lg rounded-lg mb-10 w-full  ${
                     index === 0 || index === staticData.testimonials.length - 1
                       ? "md:w-[70%]"
                       : "md:w-[28%]"

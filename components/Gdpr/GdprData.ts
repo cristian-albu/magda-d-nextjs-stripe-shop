@@ -28,7 +28,7 @@ export const staticData = {
       `Introducere`,
       `Auroralove Srl ("noi", "noi" sau "nostru") vă respectă confidențialitatea și se angajează să vă protejeze datele personale. Această politică de confidențialitate vă va informa despre modul în care colectăm, utilizăm și vă protejăm datele personale atunci când vizitați site-ul nostru web și cumpărați produsele noastre.`,
       `Operator de date
-Operatorul de date al datelor dumneavoastră cu caracter personal este Auroralove Srl, J22/514/2023, business id: 47638588, cu email magda.dimitrescu@gmail.com.
+Operatorul de date al datelor dumneavoastră cu caracter personal este Auroralove Srl, J22/514/2023, business id: 47638588, cu email auroralove.website@gmail.com.
 `,
       `Datele personale pe care le colectăm`,
       `
@@ -94,7 +94,7 @@ Este posibil să actualizăm această politică de confidențialitate din când 
 `,
       `Contactați-ne`,
       `
-Dacă aveți întrebări sau nelămuriri cu privire la această politică de confidențialitate sau practicile noastre cu privire la datele dumneavoastră cu caracter personal, vă rugăm să ne contactați la magda.dimitrescu@gmail.com.
+Dacă aveți întrebări sau nelămuriri cu privire la această politică de confidențialitate sau practicile noastre cu privire la datele dumneavoastră cu caracter personal, vă rugăm să ne contactați la auroralove.website@gmail.com.
 `,
     ],
   },
@@ -131,7 +131,7 @@ export const staticDataEn = {
       `Introduction`,
       `Auroralove Srl ("we", "us", or "our") respects your privacy and is committed to protecting your personal data. This privacy policy will inform you about how we collect, use, and protect your personal data when you visit our website and purchase our products.`,
       `Data Controller
-The data controller of your personal data is Auroralove Srl, J22/514/2023, business id: 47638588, with the email magda.dimitrescu@gmail.com.
+The data controller of your personal data is Auroralove Srl, J22/514/2023, business id: 47638588, with the email auroralove.website@gmail.com.
 `,
       `Personal Data We Collect`,
       `
@@ -197,7 +197,7 @@ We may update this privacy policy from time to time to reflect changes in our pr
 `,
       `Contact Us`,
       `
-If you have any questions or concerns about this privacy policy or our practices regarding your personal data, please contact us at magda.dimitrescu@gmail.com.
+If you have any questions or concerns about this privacy policy or our practices regarding your personal data, please contact us at auroralove.website@gmail.com.
 `,
     ],
   },

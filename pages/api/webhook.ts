@@ -125,6 +125,9 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const adrs = session.shipping.address;
       let adrsData;
 
+      let orderId: string;
+      let orderLang: string = session.metadata.lang;
+
       if (
         typeof session.receipt_email === "string" &&
         typeof session.amount === "number" &&
@@ -132,18 +135,28 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         typeof adrs.city === "string" &&
         typeof adrs.postal_code === "string"
       ) {
-        adrsData = `Oraş: ${adrs.city}, Adresă: ${adrs.line1} ${
-          adrs.line2 ? adrs.line2 : ""
-        }, Cod poştal: ${adrs.postal_code}`;
+        adrsData =
+          orderLang === "en"
+            ? `City: ${adrs.city}, Address: ${adrs.line1} ${
+                adrs.line2 ? adrs.line2 : ""
+              }, Postal Code: ${adrs.postal_code}`
+            : `Oraş: ${adrs.city}, Adresă: ${adrs.line1} ${
+                adrs.line2 ? adrs.line2 : ""
+              }, Cod poştal: ${adrs.postal_code}`;
         try {
-          await pb.collection("orders").create({
+          const res = await pb.collection("orders").create({
             json: session,
             customerEmail: session.receipt_email,
             totalSum: session.amount / 100,
-            address: JSON.stringify(adrsData),
+            address:
+              adrs.city !== "Digital"
+                ? JSON.stringify(adrsData)
+                : JSON.stringify(session.receipt_email),
             orderDate: orderDate.toUTCString(),
             orderDetails: orderItems,
           });
+
+          orderId = res.id;
         } catch (error: any) {
           let message = `There was an error trying to create in the collection "orders" from Pocketbase: ${error.message}`;
           console.log(message);
@@ -161,14 +174,34 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       //   Send confirmation email
 
-      const emailData = {
-        email: session.receipt_email,
-        message: `Comanda a fost creată la ${orderDate} pentru adresa: ${adrsData}. 
+      const emailData =
+        orderLang === "en"
+          ? {
+              email: session.receipt_email,
+              message: `Order created at ${orderDate} ${
+                adrs.city !== "Digital" ? `for: ${adrsData}` : ""
+              }. 
+        `,
+              details: `${session.description}`,
+              amount: `The total cost of the order is ${
+                session.amount / 100
+              } lei`,
+              orderId: orderId,
+              orderLang: orderLang,
+            }
+          : {
+              email: session.receipt_email,
+              message: `Comanda a fost creată la ${orderDate}  ${
+                adrs.city !== "Digital" ? `pentru: ${adrsData}` : ""
+              }. 
           `,
-        details: `${session.description}`,
-        amount: `Costul total al comenzii este ${session.amount / 100} lei`,
-      };
-
+              details: `${session.description}`,
+              amount: `Costul total al comenzii este ${
+                session.amount / 100
+              } lei`,
+              orderId: orderId,
+              orderLang: orderLang,
+            };
       const mailOptions = {
         from: process.env.NODEMAILER_EMAIL,
         to: `${process.env.NODEMAILER_EMAIL}, ${session.receipt_email}`,
@@ -182,8 +215,19 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         await transporter.sendMail({
           ...mailOptions,
-          subject: "Comandă nouă de la Magda Dimitrescu",
-          text: `Comandă nouă pentru: ${emailData.email}. ${emailData.message}. ${emailData.details} ${emailData.amount}. Plata a fost procesată cu cardul. Veți primi produsele dvs. cât mai curând posibil`,
+          subject:
+            orderLang === "en"
+              ? "New order from Magda Dimitrescu"
+              : "Comandă nouă de la Magda Dimitrescu",
+          text: `${
+            orderLang === "en" ? `New order for` : `Comandă nouă pentru:`
+          } ${emailData.email}. ${emailData.message}. ${emailData.details} ${
+            emailData.amount
+          }. ${
+            orderLang === "en"
+              ? `Payment was processed via card. You will receive your products as soon as possible. The order ID is:`
+              : `Plata a fost procesată cu cardul. Veți primi produsele dvs. cât mai curând posibil. Codul comenzii este:`
+          }  ${orderId}`,
           html: htmlPayload,
           amp: htmlPayload,
         });

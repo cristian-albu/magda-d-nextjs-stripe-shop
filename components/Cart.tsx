@@ -56,7 +56,7 @@ const Cart = () => {
 
   return (
     <div
-      className={`fixed right-0 top-0 w-full md:w-[25vw] h-full bg-gradient-to-t from-pink to-yellow shadow-2xl pl-2 shadow-black/40 z-[90] transition duration-200 origin-right ${
+      className={`fixed right-0 top-0 w-full md:w-[50%] lg:w-[33%] h-full bg-gradient-to-t from-pink to-yellow shadow-2xl pl-2 shadow-black/40 z-[90] transition duration-200 origin-right ${
         openCart ? "scale-x-1" : "scale-x-0"
       }`}
     >

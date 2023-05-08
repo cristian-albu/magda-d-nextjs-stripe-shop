@@ -279,6 +279,7 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           }`
       )}`,
       receipt_email: checkoutState.email,
+      lang: langEn ? "en" : "ro",
     };
 
     try {

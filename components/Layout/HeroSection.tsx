@@ -5,7 +5,7 @@ import React from "react";
 import { AiOutlineShopping } from "react-icons/ai";
 
 const styles = {
-  floatingIcons: `bg-[#97528E] w-[3rem] aspect-square absolute z-[10] rounded-full bg-no-repeat bg-center`,
+  floatingIcons: `bg-[#97528E] w-[2.5rem] md:w-[2rem] lg:w-[3rem] aspect-square absolute z-[10] rounded-full bg-no-repeat bg-center`,
 };
 
 const HeroSection = ({ data }: { data: any }) => {
@@ -31,13 +31,13 @@ const HeroSection = ({ data }: { data: any }) => {
                 className="w-full aspect-square rounded-full object-cover"
               />
               <div
-                className={`${styles.floatingIcons} top-[-25px] left-auto right-auto bg-[url('/assets/cross.svg')]  bg-[length:40%]`}
+                className={`${styles.floatingIcons} top-[-25px] md:top-[-15px] lg:top-[-25px] left-auto right-auto bg-[url('/assets/cross.svg')]  bg-[length:40%]`}
               />
               <div
-                className={`${styles.floatingIcons} bottom-[45px] left-[5px]  bg-[url('/assets/swirl.svg')]  bg-[length:60%]`}
+                className={`${styles.floatingIcons} bottom-[45px] md:bottom-[10px] lg:bottom-[45px] left-[5px]  bg-[url('/assets/swirl.svg')]  bg-[length:60%]`}
               />
               <div
-                className={`${styles.floatingIcons} bottom-[45px] right-[5px]  bg-[url('/assets/centerdot.svg')]  bg-[length:50%]`}
+                className={`${styles.floatingIcons} bottom-[45px] md:bottom-[10px] lg:bottom-[45px] right-[5px]  bg-[url('/assets/centerdot.svg')]  bg-[length:50%]`}
               />
             </div>
           </div>

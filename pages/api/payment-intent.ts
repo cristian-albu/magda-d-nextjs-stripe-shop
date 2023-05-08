@@ -2,7 +2,6 @@ import { instanceOfProduct, instanceOfShipping } from "@/lib/instancesCheckers";
 import pb from "@/lib/pocketBaseClient";
 import stripeAPI from "@/lib/stripeApi";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Record } from "pocketbase";
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   function calculateOrderAmount(cartItems: ProductList) {
@@ -42,7 +41,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const cartItems: Product[] = payload.cartItems;
-
+  const orderLang: string = payload.lang ? payload.lang : "ro";
   const description: string = payload.description;
   const receipt_email: string = payload.receipt_email;
   const shipping: Shipping = payload.shipping;
@@ -74,6 +73,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             d: item.digital,
           }))
         ),
+        lang: orderLang,
       },
     });
 
