@@ -2,9 +2,7 @@ import Footer from "@/components/Footer";
 import Gdpr from "@/components/Gdpr/Gdpr";
 import Nav from "@/components/Nav";
 import { CartProvider } from "@/contexts/CartProvider";
-import PrivacyContext, {
-  PrivacyContext as PrivContext,
-} from "@/components/Gdpr/PrivacyContext";
+import PrivacyContext, { PrivacyContext as PrivContext } from "@/components/Gdpr/PrivacyContext";
 import "@/styles/globals.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -18,81 +16,77 @@ import { Analytics } from "@vercel/analytics/react";
 import { useContext, useEffect } from "react";
 
 const SourceSans = Source_Sans_Pro({
-  weight: ["200", "400", "700"],
-  subsets: ["cyrillic", "latin-ext"],
-  variable: "--SourceSans",
+    weight: ["200", "400", "700"],
+    subsets: ["cyrillic", "latin-ext"],
+    variable: "--SourceSans",
 });
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
+    const router = useRouter();
 
-  const { cookieAnalytics }: any = useContext(PrivContext);
+    const { cookieAnalytics }: any = useContext(PrivContext);
 
-  return (
-    <>
-      {cookieAnalytics && <Analytics />}
-      <Head>
-        <meta property="og:site_name" content="Magda Dimistrescu" />
-        <meta property="og:type" content="website" />
-        <meta name="robots" content="index, follow" />
-        <link rel="shortcut icon" href="/images/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <div
-        className={`${SourceSans.className} ${SourceSans.variable}`}
-        style={{
-          maxWidth: "100%",
-          overflow: "hidden",
-          paddingTop: "3rem",
-          position: "relative",
-        }}
-      >
-        <PrivacyContext>
-          <CartProvider>
-            <Elements stripe={stripePromise}>
-              {!router.asPath.includes("checkout") &&
-                !router.asPath.includes("succes") && (
-                  <>
-                    <Nav route={router.asPath.split("/")} />
-                    <Cart />
-                  </>
-                )}
+    return (
+        <>
+            {cookieAnalytics && <Analytics />}
+            <Head>
+                <meta property="og:site_name" content="Magda Dimistrescu" />
+                <meta property="og:type" content="website" />
+                <meta name="robots" content="index, follow" />
+                <link rel="shortcut icon" href="/images/favicon.ico" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
+            <div
+                className={`${SourceSans.className} ${SourceSans.variable}`}
+                style={{
+                    maxWidth: "100%",
+                    overflow: "hidden",
+                    paddingTop: "3rem",
+                    position: "relative",
+                }}
+            >
+                <PrivacyContext>
+                    <CartProvider>
+                        <Elements stripe={stripePromise}>
+                            {!router.asPath.includes("checkout") && !router.asPath.includes("succes") && (
+                                <>
+                                    <Nav route={router.asPath.split("/")} />
+                                    <Cart />
+                                </>
+                            )}
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={router.route}
-                  initial="initialState"
-                  animate="animateState"
-                  exit="exitState"
-                  transition={{
-                    duration: 0.2,
-                  }}
-                  variants={{
-                    initialState: {
-                      opacity: 0,
-                    },
-                    animateState: {
-                      opacity: 1,
-                    },
-                    exitState: {
-                      opacity: 0,
-                    },
-                  }}
-                >
-                  <Component {...pageProps} />
-                </motion.div>
-              </AnimatePresence>
-              {!router.asPath.includes("succes") && <Gdpr />}
-              {!router.asPath.includes("checkout") &&
-                !router.asPath.includes("succes") && <Footer />}
-            </Elements>
-          </CartProvider>
-        </PrivacyContext>
-      </div>
-    </>
-  );
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={router.route}
+                                    initial="initialState"
+                                    animate="animateState"
+                                    exit="exitState"
+                                    transition={{
+                                        duration: 0.2,
+                                    }}
+                                    variants={{
+                                        initialState: {
+                                            opacity: 0,
+                                        },
+                                        animateState: {
+                                            opacity: 1,
+                                        },
+                                        exitState: {
+                                            opacity: 0,
+                                        },
+                                    }}
+                                >
+                                    <Component {...pageProps} />
+                                </motion.div>
+                            </AnimatePresence>
+                            {!router.asPath.includes("checkout") && !router.asPath.includes("succes") && <Gdpr />}
+                            {!router.asPath.includes("checkout") && !router.asPath.includes("succes") && <Footer />}
+                        </Elements>
+                    </CartProvider>
+                </PrivacyContext>
+            </div>
+        </>
+    );
 }
