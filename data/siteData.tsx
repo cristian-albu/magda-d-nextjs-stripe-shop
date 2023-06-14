@@ -373,7 +373,7 @@ export const termsDataRo = {
   contactați și vă vom oferi instrucțiuni suplimentare. 
   `,
     shippingTitle: `Politica de livrare`,
-    shippingPolicy: `Pentru comenzile care conțin produse fizice, folosim compania de transport DPD sau alte companii de transport 
+    shippingPolicy: `Pentru comenzile care conțin produse fizice, folosim compania de transport Sameday sau alte companii de transport 
   și va fi percepută o taxă de livrare. Costul exact va depinde de metoda de livrare, destinație și greutatea 
   coletului. Acestea vor fi afişate în sesiunea de checkout înainte de a da comanda. Vă rugăm să rețineți că costurile de livrare nu sunt rambursabile.
   Pentru cărțile electronice și alte produse digitale nu există taxe de livrare și produsele vor fi livrate 
