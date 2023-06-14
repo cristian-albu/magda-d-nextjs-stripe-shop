@@ -11,16 +11,16 @@ interface HomePageData {
 }
 
 export const homePageData: HomePageData = {
-    valueProp: `Dedic aceasta carte tuturor celor care cauta sa inteleaga mai multe despre ei insisi, 
-  natura umana precum si despre natura lucrurilor, celor care Il cauta pe Dumnezeu si le-ar folosi calauzire, 
-  celor care au venit acum pe Pamant sa se Inalte, celor care vor sa revina la starea naturala de a fi, si anume, de a iubi. 
+    valueProp: `Dedic această carte tuturor celor care caută să înțeleagă mai multe despre ei înșiși, 
+    natura umană precum și despre natura lucrurilor, celor care Îl caută pe Dumnezeu și le-ar folosi călăuzire, 
+    celor care au venit acum pe Pământ să se Înalțe, celor care vor să revină la starea naturală de a fi, și anume, de a iubi. 
   `,
-    valueProp2: `Asa sa ne ajute Dumnezeu! Multumesc Domnului!`,
-    valueDesc: `Cartea aceasta s-a nascut intai ca titlu si câteva pagini in 2014, apoi a fost continuata si scrisa in 2022 si finalizata in 2023`,
+    valueProp2: `Așa să ne ajute Dumnezeu! Mulțumesc Domnului!`,
+    valueDesc: `Cartea aceasta s-a născut întâi că titlu și câteva pagini în 2014, apoi a fost continuată și scrisă în 2022 și finalizată în 2023`,
     features: [
         {
             question: `Ce este această carte?`,
-            answer: `Un suport scris despre cum sa te înalți`,
+            answer: `Un suport scris despre cum să te înalți`,
         },
         { question: `Care a fost inspiraţia?`, answer: `Informații esoterice` },
         {
@@ -276,7 +276,7 @@ export const contactPageData: ContactPageData = {
     socialMedia: [
         {
             name: "Facebook",
-            link: "https://www.facebook.com/magda.dimitrescu",
+            link: "https://www.facebook.com/magdadimitrescu.oficial",
             icon: <AiFillFacebook />,
         },
         {
