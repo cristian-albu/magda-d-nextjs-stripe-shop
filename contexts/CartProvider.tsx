@@ -79,13 +79,13 @@ const useCartContext = (initCartState: CartStateType) => {
 export type UseCartContextType = ReturnType<typeof useCartContext>;
 
 const initCartContextState: UseCartContextType = {
-  dispatch: () => {},
+  dispatch: () => { },
   REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
   totalItems: 0,
   totalPrice: "",
   cart: [],
   openCart: false,
-  setOpenCart: () => {},
+  setOpenCart: () => { },
 };
 
 export const CartContext =
