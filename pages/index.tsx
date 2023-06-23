@@ -36,6 +36,8 @@ const Index: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
     const reviewsColLeft = reviews?.filter((e: Review, i: number) => i < Math.round(reviews.length / 2));
     const reviewsColRight = reviews?.filter((e: Review, i: number) => i >= Math.round(reviews.length / 2));
 
+    const [tblContents, setTblContents] = React.useState(false);
+
     return (
         <>
             <DynamicHead
@@ -52,6 +54,48 @@ const Index: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
                   )
                 : item_ebook &&
                   item_hardcover && <HeroProductCards ebook={item_ebook} hardcover={item_hardcover} langEn={langEn} />}
+
+            {!langEn && (
+                <Section>
+                    <Wrapper>
+                        <div className="w-full flex justify-between items-center pb-5 border-b-2 border-b-yellow border-dotted mb-5">
+                            <h2 className="text-4xl">{"Cuprinsul cărții"}</h2>
+                            <button className="btnPrimary2" onClick={() => setTblContents((tblContents) => !tblContents)}>
+                                Vezi cuprinsul cărții
+                            </button>
+                        </div>
+                        <div className="flex flex-col gap-5 relative">
+                            <Image
+                                src={"/assets/magdadimitrescu-cuprins-1.jpg"}
+                                width={900}
+                                height={900}
+                                alt="Magda Dimitrescu"
+                                className="w-full h-auto"
+                            />
+                            <Image
+                                src={"/assets/magdadimitrescu-cuprins-2.jpg"}
+                                width={900}
+                                height={900}
+                                alt="Magda Dimitrescu"
+                                className={`${tblContents ? "w-full" : "w-0"} transition-all h-auto`}
+                            />
+                            <Image
+                                src={"/assets/magdadimitrescu-cuprins-3.jpg"}
+                                width={900}
+                                height={900}
+                                alt="Magda Dimitrescu"
+                                className={`${tblContents ? "w-full" : "w-0"} transition-all h-auto`}
+                            />
+
+                            <div
+                                className={`bg-gradient-to-t from-white to-transparent w-full h-full top-0 left-0 absolute transition-all ${
+                                    tblContents ? "opacity-0" : "opacity-100"
+                                }`}
+                            />
+                        </div>
+                    </Wrapper>
+                </Section>
+            )}
 
             {reviewsColLeft && reviewsColRight && (
                 <Section bg="bg-gray-100">
