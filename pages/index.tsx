@@ -73,12 +73,12 @@ const Index: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
                             <div className="flex flex-wrap justify-between items-start">
                                 <div className="flex flex-col w-full md:w-[48%]">
                                     {reviewsColLeft.map((item: Review) => (
-                                        <ReviewCard item={item} langEn={langEn} />
+                                        <ReviewCard item={item} langEn={langEn} key={item.name} />
                                     ))}
                                 </div>
                                 <div className="flex flex-col w-full md:w-[48%]">
                                     {reviewsColRight.map((item: Review) => (
-                                        <ReviewCard item={item} langEn={langEn} />
+                                        <ReviewCard item={item} langEn={langEn} key={item.name} />
                                     ))}
                                 </div>
                             </div>
