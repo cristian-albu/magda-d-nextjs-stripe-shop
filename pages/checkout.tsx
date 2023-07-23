@@ -2,6 +2,7 @@ import {
     CheckoutCityInput,
     CheckoutEmailInput,
     CheckoutNameInput,
+    CheckoutPhoneInput,
     CheckoutPostalCode,
     CheckoutShippingInput,
 } from "@/components/CheckoutComponents";
@@ -89,6 +90,7 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ tr
         address: ``,
         email: ``,
         name: ``,
+        phone: "",
         city: ``,
         zip: ``,
     });
@@ -117,6 +119,9 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ tr
             if (target.name === "Name" || target.name === "Nume") setCheckoutState({ ...checkoutState, name: target.value });
 
             if (target.name === "Email") setCheckoutState({ ...checkoutState, email: target.value });
+
+            if (target.name === "Phone" || target.name === "Telefon")
+                setCheckoutState({ ...checkoutState, phone: target.value });
 
             if (target.name === "Address" || target.name === "Adresa")
                 setCheckoutState({ ...checkoutState, address: target.value });
@@ -171,7 +176,9 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ tr
             checkoutState.name.length < 1 ||
             !checkboxState ||
             checkoutState.city.length <= 2 ||
-            checkoutState.zip.length !== 6
+            checkoutState.zip.length !== 6 ||
+            checkoutState.phone.length < 9 ||
+            checkoutState.phone.length > 11
         ) {
             return false;
         } else {
@@ -223,6 +230,7 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ tr
             cartItems: cart,
             shipping: {
                 name: checkoutState.name,
+                phone: checkoutState.phone,
                 address: {
                     line1: checkoutState.address,
                     city: checkoutState.city,
@@ -343,6 +351,9 @@ const Checkout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ tr
                                                     </div>
                                                     <div className="col-span-2">
                                                         <CheckoutEmailInput />
+                                                    </div>
+                                                    <div className="col-span-2">
+                                                        <CheckoutPhoneInput />
                                                     </div>
 
                                                     {hasPhysicalProducts && (

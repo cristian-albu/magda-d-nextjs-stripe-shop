@@ -91,6 +91,7 @@ type ContactMailPayload = {
 
 interface Shipping {
     name: string;
+    phone: string;
     address: {
         line1: string;
     };
