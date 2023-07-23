@@ -29,6 +29,9 @@ export const CheckoutShippingInput = () => {
             state={shippingStateAdrs}
             setState={setShippingStateAdrs}
             validationCheck={shippingValidationCheckAdrs}
+            placeholder={
+                langEn ? "Street, no. , sector (if it applies), ap..." : "Strada, nr. , sectorul (dacă este cazul), ap..."
+            }
         />
     );
 };
@@ -64,6 +67,7 @@ export const CheckoutEmailInput = () => {
             state={shippingStateEmail}
             setState={setShippingStateEmail}
             validationCheck={shippingValidationCheckEmail}
+            placeholder={"contact@email.com..."}
         />
     );
 };
@@ -102,6 +106,7 @@ export const CheckoutPhoneInput = () => {
             state={shippingStatePhone}
             setState={setShippingStatePhone}
             validationCheck={shippingValidationCheckPhone}
+            placeholder={"0712345678..."}
         />
     );
 };
@@ -132,6 +137,8 @@ export const CheckoutNameInput = () => {
             state={shippingStateName}
             setState={setShippingStateName}
             validationCheck={shippingValidationCheckName}
+            placeholder={langEn ? "First and last name..." : "Nume și prenume..."}
+            customLabel={langEn ? "First and last name..." : "Nume și prenume..."}
         />
     );
 };
@@ -156,7 +163,15 @@ export const CheckoutCityInput = () => {
     };
 
     //   MUST NOT MODIFY NAMES. I WAS LAZY WITH TIHS
-    return <TextInput name={langEn ? "City" : "Oraş"} state={state} setState={setState} validationCheck={validationCheck} />;
+    return (
+        <TextInput
+            name={langEn ? "City" : "Oraş"}
+            state={state}
+            setState={setState}
+            validationCheck={validationCheck}
+            placeholder={langEn ? "Your city..." : "Orașul..."}
+        />
+    );
 };
 
 export const CheckoutPostalCode = () => {
@@ -186,6 +201,7 @@ export const CheckoutPostalCode = () => {
             setState={setState}
             validationCheck={validationCheck}
             type="number"
+            placeholder={"123456..."}
         />
     );
 };

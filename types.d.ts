@@ -81,6 +81,8 @@ type TextInput = {
     validationCheck: FormValidationFunc;
     name: string;
     type?: string;
+    placeholder?: string;
+    customLabel?: string;
 };
 
 type ContactMailPayload = {
