@@ -10,8 +10,9 @@ import { buffer } from "micro";
 import stripeAPI from "@/lib/stripeApi";
 import pb from "@/lib/pocketBaseClient";
 import { Record } from "pocketbase";
-import { transporter } from "@/lib/nodemailer";
 import OrderMailData from "@/data/orderMailData";
+import sgMail from "@sendgrid/mail";
+import { json } from "stream/consumers";
 
 // Set the config object to configure the API endpoint:
 // bodyParser is set to false because the buffer function is used to read the request body.
@@ -184,10 +185,6 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                           orderId: orderId,
                           orderLang: orderLang,
                       };
-            const mailOptions = {
-                from: process.env.NODEMAILER_EMAIL,
-                to: `${process.env.NODEMAILER_EMAIL}, ${session.receipt_email}`,
-            };
             if (!emailData.email) {
                 return res.status(400).json({ message: "Bad request" });
             }
@@ -202,34 +199,36 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }  ${orderId}`;
 
             try {
-                // await transporter.sendMail({
-                //     ...mailOptions,
-                //     subject: orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
-                //     text: textPayload,
-                //     html: htmlPayload,
-                //     amp: htmlPayload,
-                // });
                 //   Return a 200 status code with the session ID.
                 res.status(200).json({ sessionId: session.id });
 
-                await fetch("https://api.web3forms.com/submit", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify({
-                        access_key: process.env.WEB3_ACCESS_KEY,
-                        subject:
-                            orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
-                        name: emailData.email,
-                        email: emailData.email,
-                        message: textPayload,
-                    }),
-                });
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
+                const msg = {
+                    to: emailData.email, // Change to your recipient
+                    from: "magda.dimitrescu.website@gmail.com", // Change to your verified sender
+                    subject: orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
+                    text: textPayload,
+                    html: htmlPayload,
+                };
+
+                let sgMailError: string = "";
+                sgMail
+                    .send(msg)
+                    .then(() => console.log("Email sent"))
+                    .catch((error: any) => {
+                        sgMailError = JSON.stringify(error);
+                        console.log(error);
+                    });
+
+                await pb.collection("logs").create({
+                    log_message: sgMailError,
+                });
                 console.log(session.id);
             } catch (error) {
+                await pb.collection("logs").create({
+                    log_message: JSON.stringify(error),
+                });
                 console.log(error);
             }
         }
