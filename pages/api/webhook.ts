@@ -193,20 +193,37 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
 
             let htmlPayload = OrderMailData(emailData);
+            const textPayload = `${orderLang === "en" ? `New order for` : `Comandă nouă pentru:`} ${emailData.email}. ${
+                emailData.message
+            }. ${emailData.details} ${emailData.amount}. ${
+                orderLang === "en"
+                    ? `Payment was processed via card. You will receive your products as soon as possible. The order ID is:`
+                    : `Plata a fost procesată cu cardul. Veți primi produsele dvs. cât mai curând posibil. Codul comenzii este:`
+            }  ${orderId}`;
 
             try {
-                await transporter.sendMail({
-                    ...mailOptions,
-                    subject: orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
-                    text: `${orderLang === "en" ? `New order for` : `Comandă nouă pentru:`} ${emailData.email}. ${
-                        emailData.message
-                    }. ${emailData.details} ${emailData.amount}. ${
-                        orderLang === "en"
-                            ? `Payment was processed via card. You will receive your products as soon as possible. The order ID is:`
-                            : `Plata a fost procesată cu cardul. Veți primi produsele dvs. cât mai curând posibil. Codul comenzii este:`
-                    }  ${orderId}`,
-                    html: htmlPayload,
-                    amp: htmlPayload,
+                // await transporter.sendMail({
+                //     ...mailOptions,
+                //     subject: orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
+                //     text: textPayload,
+                //     html: htmlPayload,
+                //     amp: htmlPayload,
+                // });
+
+                await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        access_key: process.env.WEB3_ACCESS_KEY,
+                        subject:
+                            orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
+                        name: emailData.email,
+                        email: `${process.env.NODEMAILER_EMAIL}, ${session.receipt_email}`,
+                        message: textPayload,
+                    }),
                 });
 
                 console.log(session.id);
