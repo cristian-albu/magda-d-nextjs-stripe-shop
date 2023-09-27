@@ -223,7 +223,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                         subject:
                             orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
                         name: emailData.email,
-                        email: session.receipt_emai,
+                        email: emailData.email,
                         message: textPayload,
                     }),
                 });
