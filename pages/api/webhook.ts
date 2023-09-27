@@ -209,6 +209,8 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 //     html: htmlPayload,
                 //     amp: htmlPayload,
                 // });
+                //   Return a 200 status code with the session ID.
+                res.status(200).json({ sessionId: session.id });
 
                 await fetch("https://api.web3forms.com/submit", {
                     method: "POST",
@@ -221,15 +223,12 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                         subject:
                             orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
                         name: emailData.email,
-                        email: `${process.env.NODEMAILER_EMAIL}, ${session.receipt_email}`,
+                        email: session.receipt_emai,
                         message: textPayload,
                     }),
                 });
 
                 console.log(session.id);
-                //   Return a 200 status code with the session ID.
-
-                res.status(200).json({ sessionId: session.id });
             } catch (error) {
                 console.log(error);
             }
