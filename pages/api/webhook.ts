@@ -13,6 +13,7 @@ import { Record } from "pocketbase";
 import OrderMailData from "@/data/orderMailData";
 import sgMail from "@sendgrid/mail";
 import { json } from "stream/consumers";
+import { TOrderConfirmationEmailBody } from "./order-confirmation-email";
 
 // Set the config object to configure the API endpoint:
 // bodyParser is set to false because the buffer function is used to read the request body.
@@ -198,39 +199,22 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     : `Plata a fost procesată cu cardul. Veți primi produsele dvs. cât mai curând posibil. Codul comenzii este:`
             }  ${orderId}`;
 
-            try {
-                //   Return a 200 status code with the session ID.
-                res.status(200).json({ sessionId: session.id });
+            const msg: TOrderConfirmationEmailBody = {
+                key: process.env.ORDER_MAIL_KEY,
+                to: emailData.email, // Change to your recipient
+                from: "magda.dimitrescu.website@gmail.com",
+                subject: orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
+                text: textPayload,
+                html: htmlPayload,
+            };
 
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+            const mailApiResponse = await fetch(`${process.env.BASE_PATH}/api/order-confirmation-email`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(msg),
+            });
 
-                const msg = {
-                    to: emailData.email, // Change to your recipient
-                    from: "magda.dimitrescu.website@gmail.com", // Change to your verified sender
-                    subject: orderLang === "en" ? "New order from Magda Dimitrescu" : "Comandă nouă de la Magda Dimitrescu",
-                    text: textPayload,
-                    html: htmlPayload,
-                };
-
-                let sgMailError: string = "";
-                sgMail
-                    .send(msg)
-                    .then(() => console.log("Email sent"))
-                    .catch((error: any) => {
-                        sgMailError = JSON.stringify(error);
-                        console.log(error);
-                    });
-
-                await pb.collection("logs").create({
-                    log_message: sgMailError,
-                });
-                console.log(session.id);
-            } catch (error) {
-                await pb.collection("logs").create({
-                    log_message: JSON.stringify(error),
-                });
-                console.log(error);
-            }
+            return res.status(200).json({ sessionId: session.id });
         }
     } else {
         let message = "Method not allowed";
